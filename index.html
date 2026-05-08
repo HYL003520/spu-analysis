@@ -724,10 +724,6 @@ input.editable-cell:focus { border-color: #ffc107; background: #fff8e1; }
             '</tr></thead><tbody>' + rowsHTML2 + '</tbody></table>' +
             '<button class="add-row-btn" data-padd="' + pi2 + '">+ 添加一行</button>' +
           '</div>' +
-          '<div class="text-toolbar" style="margin-top:10px">' +
-            '<input type="color" value="' + esc(ph2.analysisColor || pd2.textColor) + '" data-pana="' + pi2 + '" data-ana="color" title="文字颜色">' +
-            '<button class="bold-btn' + (ph2.analysisBold ? ' active' : '') + '" data-pana="' + pi2 + '" data-ana="bold" title="加粗">B</button>' +
-          '</div>' +
           '<textarea class="phase-analysis-ta" data-pana="' + pi2 + '" data-ana="text" placeholder="输入阶段分析...">' + esc(ph2.analysis || '') + '</textarea>' +
         '</div>';
     }
@@ -743,10 +739,6 @@ input.editable-cell:focus { border-color: #ffc107; background: #fff8e1; }
           '<div class="acard-header">' +
             '<span class="atag">' + pad.id + '</span>' +
             '<span class="aname">' + esc(aph.name || pad.defaultName) + '</span>' +
-          '</div>' +
-          '<div class="text-toolbar">' +
-            '<input type="color" value="' + esc(aph.analysisColor || pad.textColor) + '" data-cardana="' + ai + '" data-cardf="color">' +
-            '<button class="bold-btn' + (aph.analysisBold ? ' active' : '') + '" data-cardana="' + ai + '" data-cardf="bold" title="加粗">B</button>' +
           '</div>' +
           '<textarea data-cardana="' + ai + '" data-cardf="text" placeholder="输入分析内容...">' + esc(aph.analysis || '') + '</textarea>' +
         '</div>';
