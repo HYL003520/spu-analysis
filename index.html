@@ -3,318 +3,154 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FADFAD产品分析系统</title>
+<title>SPU 爆款运营分析系统</title>
 <style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --p1: #4caf50; --p1bg: #e8f5e9; --p1c: #2e7d32;
-  --p2: #ff9800; --p2bg: #fff3e0; --p2c: #e65100;
-  --p3: #f44336; --p3bg: #ffebee; --p3c: #c62828;
-  --p4: #1a237e; --p4bg: #e8eaf6; --p4c: #1565c0;
-  --p5: #9c27b0; --p5bg: #f3e5f5; --p5c: #7b1fa2;
-  --primary: #1a237e;
-  --bg: #f0f2f5;
-  --card: #ffffff;
-  --border: #e0e4f0;
-  --text: #333;
-  --muted: #888;
-}
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
-  background: var(--bg);
-  font-size: 13px;
-  color: var(--text);
-  min-height: 100vh;
-}
-
-/* TOPBAR */
-.topbar {
-  background: linear-gradient(135deg, #1a237e, #0d47a1);
-  color: #fff;
-  padding: 14px 24px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  box-shadow: 0 4px 16px rgba(26,35,126,0.25);
-}
-.topbar h1 { font-size: 17px; font-weight: 800; letter-spacing: 0.3px; }
-.topbar .sep { width: 1px; height: 18px; background: rgba(255,255,255,0.3); }
-.topbar .ver { font-size: 11px; opacity: 0.75; background: rgba(255,255,255,0.15); padding: 2px 8px; border-radius: 10px; }
-.topbar .tag { font-size: 11px; background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 10px; }
-
-/* LAYOUT */
-.layout { display: flex; gap: 14px; padding: 16px; max-width: 1400px; margin: 0 auto; align-items: flex-start; flex-wrap: wrap; }
-
-/* SIDEBAR */
-.sidebar {
-  width: 200px;
-  background: var(--card);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  padding: 12px 0;
-  flex-shrink: 0;
-  min-height: 200px;
-}
-.sidebar-title { font-size: 10px; color: #aaa; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 0 14px 8px; }
-.product-item {
-  padding: 9px 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  border-left: 3px solid transparent;
-  font-size: 12px;
-  color: #555;
-  transition: all 0.15s;
-  position: relative;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif; background: #f0f2f5; font-size: 13px; color: #1a1a2e; min-height: 100vh; }
+.container { max-width: 1150px; margin: 0 auto; padding: 0 16px 40px; }
+.topbar { background: linear-gradient(135deg, #1a237e, #0d47a1); color: #fff; padding: 16px 24px; border-radius: 0 0 20px 20px; box-shadow: 0 4px 16px rgba(26,35,126,0.3); display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.topbar h1 { font-size: 18px; font-weight: 700; }
+.topbar .subtitle { font-size: 11px; opacity: 0.8; margin-left: auto; }
+.badge { display: inline-block; background: #FF4444; color: #fff; font-size: 11px; padding: 2px 10px; border-radius: 10px; font-weight: 700; }
+.badge.ss { background: #FF7F0E; }
+.layout { display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
+.sidebar { width: 200px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 12px 0; flex-shrink: 0; }
+.sidebar-title { font-size: 10px; color: #999; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 0 14px 8px; }
+.product-item { padding: 9px 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; border-left: 3px solid transparent; font-size: 12px; color: #555; transition: all 0.15s; }
 .product-item:hover { background: #f5f7ff; }
-.product-item.active { background: #e8eaf6; border-left-color: var(--primary); color: var(--primary); font-weight: 700; }
-.product-item .del-btn {
-  margin-left: auto; opacity: 0; font-size: 13px; color: #e53935;
-  cursor: pointer; background: none; border: none; padding: 0; line-height: 1;
-  transition: opacity 0.15s;
-}
+.product-item.active { background: #e8eaf6; border-left-color: #1a237e; color: #1a237e; font-weight: 700; }
+.product-item .del-btn { margin-left: auto; opacity: 0; font-size: 14px; color: #e53935; cursor: pointer; }
 .product-item:hover .del-btn { opacity: 1; }
-.add-btn {
-  margin: 6px 14px 0; padding: 7px 14px;
-  background: #f5f7ff; border: 1px dashed var(--primary);
-  border-radius: 6px; color: var(--primary); font-size: 12px;
-  font-weight: 600; cursor: pointer; text-align: center;
-  transition: all 0.15s; display: block;
-}
+.add-btn { margin: 6px 14px 0; padding: 7px 14px; background: #f5f7ff; border: 1px dashed #1a237e; border-radius: 6px; color: #1a237e; font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; transition: all 0.15s; display: block; }
 .add-btn:hover { background: #e8eaf6; }
-
-/* MAIN */
 .main { flex: 1; min-width: 0; }
-
-/* SECTION TITLE */
-.sec-title {
-  font-size: 13px; font-weight: 700; color: #333;
-  margin: 18px 0 10px;
-  display: flex; align-items: center; gap: 8px;
-}
-.sec-title::before { content: ''; width: 3px; height: 15px; background: var(--primary); border-radius: 2px; }
-
-/* OVERVIEW CARDS */
-.overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 16px; }
-.ov { background: var(--card); border-radius: 12px; padding: 12px 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-.ov .lbl { font-size: 10px; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
-.ov .val { font-size: 20px; font-weight: 800; line-height: 1.1; }
-.ov .val.blue { color: var(--primary); }
+.sec-title { font-size: 14px; font-weight: 700; color: #333; margin: 18px 0 10px; display: flex; align-items: center; gap: 8px; }
+.sec-title::before { content: ''; width: 3px; height: 16px; background: #1a237e; border-radius: 2px; }
+.overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.ov { background: #fff; border-radius: 12px; padding: 13px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.ov .lbl { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+.ov .val { font-size: 22px; font-weight: 800; line-height: 1.1; }
+.ov .val.blue { color: #1a237e; }
 .ov .val.red { color: #e53935; }
 .ov .val.orange { color: #e65100; }
 .ov .val.green { color: #2e7d32; }
 .ov .sub { font-size: 10px; color: #bbb; margin-top: 2px; }
-
-/* PRODUCT INFO CARD */
-.info-card { background: var(--card); border-radius: 14px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 16px; }
-.info-card .info-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
-.info-card .spu { font-size: 16px; font-weight: 800; color: var(--primary); }
-.info-card .grade-badge { font-size: 11px; background: #FF7F0E; color: #fff; padding: 2px 10px; border-radius: 10px; font-weight: 700; }
-.info-card .info-name { font-size: 11px; color: #888; margin-left: auto; }
-.info-card .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
-.info-card .info-field { display: flex; flex-direction: column; gap: 2px; }
-.info-card .info-field label { font-size: 10px; color: #aaa; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
-.info-card .info-field span { font-size: 13px; font-weight: 600; color: #333; }
-
-/* PHASE TIMELINE */
-.phase-timeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 16px; }
-.phase-col {
-  background: var(--card);
-  border-radius: 10px;
-  padding: 10px 8px;
-  text-align: center;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  border-top: 3px solid;
-  position: relative;
-}
-.phase-col.p1 { border-color: var(--p1); }
-.phase-col.p2 { border-color: var(--p2); }
-.phase-col.p3 { border-color: var(--p3); }
-.phase-col.p4 { border-color: var(--p4); }
-.phase-col.p5 { border-color: var(--p5); }
-.phase-col .pnum { font-size: 9px; font-weight: 700; color: #fff; padding: 1px 6px; border-radius: 8px; display: inline-block; margin-bottom: 4px; }
-.p1 .pnum { background: var(--p1); }
-.p2 .pnum { background: var(--p2); }
-.p3 .pnum { background: var(--p3); }
-.p4 .pnum { background: var(--p4); }
-.p5 .pnum { background: var(--p5); }
-.phase-col .pname { font-size: 11px; font-weight: 700; color: #333; line-height: 1.3; margin-bottom: 4px; }
-.phase-col .pdate { font-size: 10px; color: #888; margin-bottom: 6px; }
-.phase-col .pedit { font-size: 9px; color: #aaa; margin-bottom: 4px; }
-.phase-col .pedit input { width: 100%; border: 1px solid #e0e0e0; border-radius: 3px; padding: 2px 4px; font-size: 9px; font-family: inherit; text-align: center; box-sizing: border-box; }
-.phase-col .pedit input:focus { border-color: var(--primary); outline: none; }
-.phase-col .pstatus { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 8px; display: inline-block; }
-.pstatus.成功 { background: #e8f5e9; color: #2e7d32; }
-.pstatus.表现差 { background: #fff3e0; color: #e65100; }
-.pstatus.小爆 { background: #e3f2fd; color: #1565c0; }
-.pstatus.大爆 { background: #ffebee; color: #c62828; }
-.pstatus.衰减 { background: #f3e5f5; color: #7b1fa2; }
-
-/* DATA TABLE */
-.table-wrap { overflow-x: auto; margin-bottom: 16px; }
-.data-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); font-size: 11px; }
-.data-table th {
-  background: var(--primary); color: #fff;
-  padding: 7px 6px; text-align: center; font-size: 10px; font-weight: 700;
-  white-space: nowrap; border: 1px solid #283593;
-}
-.data-table td { padding: 4px 5px; text-align: center; border: 1px solid #e8eef8; color: #333; font-size: 11px; vertical-align: middle; }
+.phases { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 16px; overflow-x: auto; }
+.phase { background: #fff; border-radius: 10px; padding: 10px 8px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border: 2px solid transparent; min-width: 100px; }
+.phase.on { border-color: #1a237e; background: #e8eaf6; }
+.phase .num { font-size: 10px; font-weight: 700; color: #fff; background: #1a237e; padding: 1px 6px; border-radius: 8px; display: inline-block; margin-bottom: 4px; }
+.phase .name { font-size: 11px; font-weight: 700; color: #333; line-height: 1.3; margin-bottom: 4px; }
+.phase .date { font-size: 10px; color: #888; }
+.phase .st { font-size: 10px; font-weight: 700; margin-top: 4px; padding: 1px 6px; border-radius: 8px; display: inline-block; }
+.phase .st.ok { background: #e8f5e9; color: #2e7d32; }
+.phase .st.warn { background: #fff3e0; color: #e65100; }
+.phase .st.delay { background: #ffebee; color: #c62828; }
+.data-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); font-size: 11px; }
+.data-table th { background: #1a237e; color: #fff; padding: 7px 6px; text-align: center; font-size: 10px; font-weight: 700; white-space: nowrap; border: 1px solid #283593; }
+.data-table th.s1 { background: #3949ab; border-color: #283593; }
+.data-table th.s2 { background: #5c6bc0; border-color: #3949ab; }
+.data-table td { padding: 5px 6px; text-align: center; border: 1px solid #e8eef8; color: #333; font-size: 11px; vertical-align: middle; }
 .data-table tr:nth-child(even) td { background: #fafbff; }
 .data-table tr:hover td { background: #eef2ff; }
-.data-table tr.peak td { background: #fff9c4 !important; font-weight: 700; }
+.data-table tr.peak td { background: #fff9c4; }
+.data-table tr.peak2 td { background: #ffe0b2; }
+.data-table tr.wk-label td { background: #f0f4ff; font-weight: 700; color: #1a237e; font-size: 10px; text-align: left; padding-left: 12px; }
+.data-table tr.wk-label.ai td { background: #f3e5f5; }
+.data-table tr.wk-label.short td { background: #e3f2fd; }
 td.num { text-align: right; font-variant-numeric: tabular-nums; }
-td.dt { text-align: left; font-weight: 600; color: var(--primary); white-space: nowrap; }
-
-/* EDITABLE CELLS */
-input.editable-cell {
-  background: #fffde7;
-  border: 1px solid #ffe082;
-  border-radius: 4px;
-  padding: 3px 5px;
-  font-size: 11px;
-  width: 100%;
-  font-family: inherit;
-  text-align: center;
-  outline: none;
-  box-sizing: border-box;
-  min-width: 40px;
-}
-input.editable-cell:focus { border-color: #ffc107; background: #fff8e1; }
-
-/* PHASE DATA SECTION */
-.phase-section { background: var(--card); border-radius: 12px; padding: 14px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid; }
-.phase-section.p1 { border-color: var(--p1); }
-.phase-section.p2 { border-color: var(--p2); }
-.phase-section.p3 { border-color: var(--p3); }
-.phase-section.p4 { border-color: var(--p4); }
-.phase-section.p5 { border-color: var(--p5); }
-.phase-section .ps-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
-.phase-section .ps-title { font-size: 13px; font-weight: 700; color: #333; }
-.phase-section .ps-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; }
-.phase-section.p1 .ps-badge { background: var(--p1bg); color: var(--p1c); }
-.phase-section.p2 .ps-badge { background: var(--p2bg); color: var(--p2c); }
-.phase-section.p3 .ps-badge { background: var(--p3bg); color: var(--p3c); }
-.phase-section.p4 .ps-badge { background: var(--p4bg); color: var(--p4c); }
-.phase-section.p5 .ps-badge { background: var(--p5bg); color: var(--p5c); }
-.phase-section .ps-controls { margin-left: auto; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-.phase-section .ps-controls label { font-size: 10px; color: #888; }
-.phase-section .ps-controls input[type="date"] { border: 1px solid #e0e0e0; border-radius: 4px; padding: 3px 6px; font-size: 10px; font-family: inherit; }
-.phase-section .ps-controls input[type="text"] { border: 1px solid #e0e0e0; border-radius: 4px; padding: 3px 6px; font-size: 10px; font-family: inherit; width: 120px; }
-.phase-section .ps-controls select { border: 1px solid #e0e0e0; border-radius: 4px; padding: 3px 6px; font-size: 10px; font-family: inherit; }
-
-/* PHASE ANALYSIS CARDS */
-.ana-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px; }
-.acard { background: var(--card); border-radius: 12px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid; position: relative; }
-.acard.p1 { border-color: var(--p1); }
-.acard.p2 { border-color: var(--p2); }
-.acard.p3 { border-color: var(--p3); }
-.acard.p4 { border-color: var(--p4); }
-.acard.p5 { border-color: var(--p5); }
-.acard .acard-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-.acard .atag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; }
-.p1 .atag { background: var(--p1bg); color: var(--p1c); }
-.p2 .atag { background: var(--p2bg); color: var(--p2c); }
-.p3 .atag { background: var(--p3bg); color: var(--p3c); }
-.p4 .atag { background: var(--p4bg); color: var(--p4c); }
-.p5 .atag { background: var(--p5bg); color: var(--p5c); }
-.acard .aname { font-size: 12px; font-weight: 700; color: #333; }
-.acard textarea { width: 100%; min-height: 80px; border: 1px solid #e0e0e0; border-radius: 6px; padding: 8px; font-size: 11px; font-family: inherit; resize: vertical; outline: none; box-sizing: border-box; line-height: 1.5; }
-.acard textarea:focus { border-color: var(--primary); }
-.acard .text-toolbar { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
-.acard .text-toolbar input[type="color"] { width: 26px; height: 26px; padding: 1px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; }
-.acard .text-toolbar .bold-btn {
-  width: 26px; height: 26px; border: 1px solid #ddd; border-radius: 4px;
-  background: #fff; font-size: 12px; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
-.acard .text-toolbar .bold-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-
-/* SUGGESTIONS */
-.sug-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-.sug-item {
-  background: var(--card); border-radius: 10px; padding: 10px 12px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06); display: flex; gap: 8px;
-  align-items: flex-start; border: 1px solid #f0f0f0;
-}
-.sug-item .drag { cursor: grab; color: #ccc; font-size: 14px; padding-top: 2px; flex-shrink: 0; }
-.sug-item textarea { flex: 1; border: 1px solid #e0e0e0; border-radius: 6px; padding: 6px 8px; font-size: 11px; font-family: inherit; resize: vertical; min-height: 50px; outline: none; }
-.sug-item textarea:focus { border-color: var(--primary); }
-.sug-item .sug-tools { display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
-.sug-item input[type="color"] { width: 26px; height: 26px; padding: 1px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; }
-.sug-item .bold-btn {
-  width: 26px; height: 26px; border: 1px solid #ddd; border-radius: 4px;
-  background: #fff; font-size: 12px; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
-.sug-item .bold-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-.sug-item .del-sug { font-size: 13px; color: #e53935; cursor: pointer; background: none; border: none; padding: 2px 4px; }
-
-/* DASHBOARD */
-.dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
-.dash-card { background: var(--card); border-radius: 10px; padding: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border-top: 3px solid var(--primary); cursor: pointer; transition: all 0.15s; position: relative; }
+td.dt { text-align: left; font-weight: 600; color: #1a237e; white-space: nowrap; }
+td.g { color: #2e7d32; font-weight: 700; }
+td.r { color: #e53935; font-weight: 700; }
+td.o { color: #e65100; font-weight: 700; }
+td.o2 { color: #f57f17; font-weight: 700; }
+td.dim { color: #bbb; }
+.red-tag { display: inline-block; background: #ffebee; color: #c62828; font-size: 10px; padding: 1px 6px; border-radius: 4px; font-weight: 700; margin-left: 4px; }
+.editable { background: #fffde7; border: 1px solid #ffe082; border-radius: 4px; padding: 4px 6px; font-size: 11px; width: 100%; font-family: inherit; text-align: center; outline: none; box-sizing: border-box; display: block; }
+.editable:focus { border-color: #ffc107; background: #fff8e1; }
+textarea.editable { text-align: left; resize: vertical; min-height: 60px; width: 100%; box-sizing: border-box; }
+.add-row-btn { width: 100%; padding: 6px; background: #f5f7ff; border: 1px dashed #1a237e; color: #1a237e; font-size: 11px; font-weight: 600; cursor: pointer; border-radius: 4px; transition: all 0.15s; display: block; margin-top: 8px; }
+.add-row-btn:hover { background: #e8eaf6; }
+.ana-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.acard { background: #fff; border-radius: 12px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid; }
+.acard.p1 { border-color: #4caf50; }
+.acard.p2 { border-color: #ff9800; }
+.acard.p3 { border-color: #f44336; }
+.acard.p4 { border-color: #9c27b0; }
+.acard h3 { font-size: 12px; font-weight: 700; color: #333; margin-bottom: 8px; }
+.acard h3 .tag { font-size: 10px; padding: 1px 6px; border-radius: 6px; font-weight: 700; margin-left: 6px; }
+.acard.p1 h3 .tag { background: #e8f5e9; color: #2e7d32; }
+.acard.p2 h3 .tag { background: #fff3e0; color: #e65100; }
+.acard.p3 h3 .tag { background: #ffebee; color: #c62828; }
+.acard.p4 h3 .tag { background: #f3e5f5; color: #7b1fa2; }
+.acard ul { list-style: none; padding: 0; }
+.acard li { font-size: 11px; color: #555; padding: 3px 0; border-bottom: 1px solid #f5f5f5; line-height: 1.5; }
+.acard li:last-child { border: none; }
+.sug-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.sug-card { background: #fff; border-radius: 12px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 3px solid; }
+.sug-card.s1 { border-color: #4caf50; }
+.sug-card.s2 { border-color: #ff9800; }
+.sug-card.s3 { border-color: #7b1fa2; }
+.sug-card.s4 { border-color: #00897b; }
+.sug-card.s5 { border-color: #c62828; }
+.sug-card h4 { font-size: 12px; font-weight: 700; color: #333; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.sug-card h4 .num { display: inline-block; width: 18px; height: 18px; background: #1a237e; color: #fff; border-radius: 50%; font-size: 10px; text-align: center; line-height: 18px; flex-shrink: 0; }
+.sug-card.s2 h4 .num { background: #e65100; }
+.sug-card.s3 h4 .num { background: #7b1fa2; }
+.sug-card.s4 h4 .num { background: #00897b; }
+.sug-card.s5 h4 .num { background: #c62828; }
+.dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.dash-card { background: #fff; border-radius: 10px; padding: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border-top: 3px solid #1a237e; cursor: pointer; transition: all 0.15s; }
 .dash-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); transform: translateY(-1px); }
-.dash-card .dc-del { position: absolute; top: 6px; right: 8px; font-size: 12px; color: #ccc; cursor: pointer; }
-.dash-card .dc-del:hover { color: #e53935; }
-.dash-card .dc-label { font-size: 11px; font-weight: 700; color: #555; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.dash-card .dc-label input { border: none; background: transparent; font-size: 11px; font-weight: 700; color: #555; width: 100%; font-family: inherit; outline: none; }
-.dash-card .dc-val { font-size: 24px; font-weight: 800; color: var(--primary); }
-.dash-card .dc-val input { border: none; background: transparent; font-size: 24px; font-weight: 800; color: var(--primary); width: 100%; font-family: inherit; outline: none; text-align: left; }
-.dash-card .dc-sub { font-size: 10px; color: #999; margin-top: 2px; }
-.dash-card .dc-sub input { border: none; background: transparent; font-size: 10px; color: #999; width: 100%; font-family: inherit; outline: none; }
-
-/* BUTTONS */
-.btn { padding: 7px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; display: inline-flex; align-items: center; gap: 4px; }
-.btn-primary { background: var(--primary); color: #fff; }
-.btn-primary:hover { background: #0d47a1; }
-.btn-outline { background: #fff; color: #555; border: 1px solid #cbd5e1; }
-.btn-outline:hover { background: #f5f7ff; }
-.btn-sm { padding: 5px 12px; font-size: 11px; }
-.btn-add { background: #f5f7ff; border: 1px dashed var(--primary); color: var(--primary); border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; padding: 6px 14px; display: inline-flex; align-items: center; gap: 4px; transition: all 0.15s; }
-.btn-add:hover { background: #e8eaf6; }
-
-/* MODAL */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.dash-card.inactive { border-top-color: #666; }
+.dc-label { font-size: 11px; font-weight: 700; color: #555; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dc-val { font-size: 22px; font-weight: 800; color: #1a237e; }
+.dc-sub { font-size: 10px; color: #999; margin-top: 2px; }
+.dc-note { font-size: 10px; color: #c62828; margin-top: 4px; line-height: 1.4; }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 1000; }
 .modal-overlay.hidden { display: none; }
-.modal { background: #fff; border-radius: 14px; padding: 24px; width: 400px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; }
+.modal { background: #fff; border-radius: 12px; padding: 24px; width: 380px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; }
 .modal h3 { font-size: 15px; font-weight: 700; color: #333; margin-bottom: 16px; }
 .modal .field { margin-bottom: 12px; }
 .modal .field label { display: block; font-size: 11px; font-weight: 700; color: #555; margin-bottom: 4px; }
 .modal .field input { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; outline: none; box-sizing: border-box; font-family: inherit; }
-.modal .field input:focus { border-color: var(--primary); }
+.modal .field input:focus { border-color: #1a237e; }
 .modal-actions { display: flex; gap: 8px; margin-top: 18px; justify-content: flex-end; }
-
-/* EMPTY STATE */
+.btn { padding: 7px 18px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; display: inline-block; }
+.btn-primary { background: #1a237e; color: #fff; }
+.btn-primary:hover { background: #0d47a1; }
+.btn-success { background: #2e7d32; color: #fff; }
+.btn-success:hover { background: #1b5e20; }
+.btn-outline { background: #fff; color: #555; border: 1px solid #cbd5e1; }
+.btn-outline:hover { background: #f5f7ff; }
+.toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.toolbar .btn-sm { padding: 5px 14px; font-size: 11px; }
 .empty-state { text-align: center; padding: 60px 20px; color: #999; }
 .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
 .empty-state p { font-size: 14px; margin-bottom: 16px; }
-
-/* TOOLBAR */
-.toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; align-items: center; }
-
-/* ADD ROW BTN */
-.add-row-btn { width: 100%; padding: 6px; background: #f5f7ff; border: 1px dashed var(--primary); color: var(--primary); font-size: 11px; font-weight: 600; cursor: pointer; border-radius: 4px; transition: all 0.15s; display: block; margin-top: 8px; }
-.add-row-btn:hover { background: #e8eaf6; }
-
+.analyzing-overlay { position: fixed; inset: 0; background: rgba(26,35,126,0.85); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2000; color: #fff; }
+.analyzing-overlay.hidden { display: none; }
+.analyzing-overlay .spinner { font-size: 48px; animation: spin 1s linear infinite; margin-bottom: 16px; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.analyzing-overlay p { font-size: 14px; font-weight: 600; }
+.panel-wrap { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 14px; margin-bottom: 16px; }
+.panel-wrap label.lbl { font-size: 11px; font-weight: 700; color: #333; display: block; margin-bottom: 6px; }
 @media (max-width: 768px) {
   .sidebar { width: 100%; }
   .layout { flex-direction: column; }
-  .phase-timeline { grid-template-columns: repeat(3, 1fr); }
+  .phases { grid-template-columns: repeat(3, 1fr); }
   .ana-grid { grid-template-columns: 1fr; }
+  .sug-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
-
 <div class="topbar">
-  <h1>FADFAD产品分析系统</h1>
-  <span class="sep"></span>
-  <span class="ver">v1.0</span>
-  <span class="tag">多产品</span>
+  <h1>SPU 爆款运营分析系统</h1>
+  <span class="badge">v11</span>
+  <span class="badge ss">多产品</span>
+  <span class="subtitle">每日数据 | 可编辑 | 自动分析 | 自动保存</span>
 </div>
-
+<div class="container">
 <div class="layout">
   <div class="sidebar">
     <div class="sidebar-title">产品列表</div>
@@ -323,14 +159,14 @@ input.editable-cell:focus { border-color: #ffc107; background: #fff8e1; }
   </div>
   <div class="main" id="main-area">
     <div class="empty-state" id="empty-state">
-      <div class="icon">📦</div>
+      <div class="icon">&#128230;</div>
       <p>暂无产品</p>
       <button class="btn btn-primary" id="btn-add-first">+ 添加第一个产品</button>
     </div>
   </div>
 </div>
+</div>
 
-<!-- PRODUCT MODAL -->
 <div class="modal-overlay hidden" id="modal-product">
   <div class="modal">
     <h3 id="modal-title">添加新产品</h3>
@@ -340,7 +176,7 @@ input.editable-cell:focus { border-color: #ffc107; background: #fff8e1; }
     <div class="field"><label>上架日期</label><input id="m-date" type="date" value="2025-11-17"></div>
     <div class="field"><label>首次寄样日期</label><input id="m-sample" type="date"></div>
     <div class="field"><label>爆款等级</label><input id="m-grade" placeholder="如 SS"></div>
-    <div class="field"><label>总销量（初始值）</label><input id="m-total" type="number" placeholder="如 5309"></div>
+    <div class="field"><label>总销量</label><input id="m-total" type="number" placeholder="如 5309"></div>
     <div class="field"><label>测试价格</label><input id="m-price" placeholder="如 Rp215,000"></div>
     <div class="modal-actions">
       <button class="btn btn-outline" id="btn-modal-cancel">取消</button>
@@ -349,822 +185,703 @@ input.editable-cell:focus { border-color: #ffc107; background: #fff8e1; }
   </div>
 </div>
 
+<div class="analyzing-overlay hidden" id="analyzing">
+  <div class="spinner">&#9676;</div>
+  <p>自动分析中，请稍候...</p>
+</div>
+
 <script>
-(function() {
-  'use strict';
+// Global error handler
+window.onerror = function(msg, url, line, col, error) {
+  console.error('[JS Error]', msg, 'at line', line, col, error ? error.stack : '');
+  return false;
+};
 
-  // ========== CONFIG ==========
-  var STORAGE_KEY = 'fadfad_analysis_v1';
-  var PHASE_DEFS = [
-    { id: 1, defaultName: '链接活跃期（直播发力）', color: '#4caf50', textColor: '#2e7d32' },
-    { id: 2, defaultName: '稳定期（录播/AI发力）', color: '#ff9800', textColor: '#e65100' },
-    { id: 3, defaultName: '爆发期（首批样品）', color: '#f44336', textColor: '#c62828' },
-    { id: 4, defaultName: '稳定出单期', color: '#1a237e', textColor: '#1565c0' },
-    { id: 5, defaultName: '收尾阶段（衰减期）', color: '#9c27b0', textColor: '#7b1fa2' }
-  ];
-  var STATUS_OPTIONS = ['成功', '表现差', '小爆', '大爆', '衰减'];
+var STORAGE_KEY = 'spu_analysis_v11';
 
-  // ========== GLOBAL ERROR HANDLER ==========
-  window.onerror = function(msg, url, line, col, error) {
-    console.error('[JS Error]', msg, 'at line', line, col, error ? error.stack : '');
-    return false;
-  };
-
-  // ========== STATE ==========
-  var products = {};
-  var activeId = null;
-  var editTargetId = null;
-  var saveTimer = null;
-
-  // ========== DEFAULT DATA ==========
-  function getDefaultData() {
-    return {
-      "FADUU25110716": {
-        spu: "FADUU25110716",
-        pid: "1733257836187584258",
-        name: "[ready stock] FADFAD Gaun elegan bergaya retro",
-        launchDate: "2025-11-17",
-        sampleDate: "2026-01-06",
-        grade: "SS",
-        totalSales: "5309",
-        price: "Rp215,000",
-        phases: [
-          {
-            id: 1,
-            startDate: "2025-11-17",
-            endDate: "2025-11-28",
-            name: "链接活跃期（直播发力）",
-            status: "成功",
-            analysis: "11/18峰值694件，直播650件占94%，录屏贡献666件。录屏是核心驱动力：11/18录屏新增55条，出单666件。11/23直播断播后未恢复。录屏第1天55条，但后续日均仅1.2条，严重不足。",
-            analysisColor: "#2e7d32",
-            analysisBold: false,
-            rows: [
-              { date:"2025-11-17",total:"1",live:"1",video:"0",mall:"0",newVid:"1",recNew:"1",recOrd:"1",aiNew:"0",aiOrd:"0",phase:"上架日" },
-              { date:"2025-11-18",total:"694",live:"650",video:"13",mall:"2",newVid:"56",recNew:"55",recOrd:"666",aiNew:"1",aiOrd:"1",phase:"爆发",isPeak:true },
-              { date:"2025-11-19",total:"163",live:"111",video:"38",mall:"14",newVid:"11",recNew:"11",recOrd:"6",aiNew:"0",aiOrd:"0",phase:"回落" },
-              { date:"2025-11-20",total:"83",live:"64",video:"15",mall:"13",newVid:"10",recNew:"7",recOrd:"4",aiNew:"2",aiOrd:"0",phase:"" },
-              { date:"2025-11-21",total:"76",live:"58",video:"8",mall:"12",newVid:"7",recNew:"4",recOrd:"1",aiNew:"3",aiOrd:"0",phase:"" },
-              { date:"2025-11-22",total:"78",live:"63",video:"7",mall:"8",newVid:"12",recNew:"11",recOrd:"2",aiNew:"1",aiOrd:"0",phase:"" },
-              { date:"2025-11-23",total:"15",live:"0",video:"9",mall:"6",newVid:"3",recNew:"3",recOrd:"1",aiNew:"0",aiOrd:"0",phase:"断播" },
-              { date:"2025-11-24",total:"49",live:"24",video:"18",mall:"7",newVid:"5",recNew:"1",recOrd:"0",aiNew:"4",aiOrd:"0",phase:"" },
-              { date:"2025-11-25",total:"32",live:"11",video:"16",mall:"5",newVid:"6",recNew:"2",recOrd:"0",aiNew:"4",aiOrd:"0",phase:"" },
-              { date:"2025-11-26",total:"51",live:"18",video:"21",mall:"12",newVid:"1",recNew:"1",recOrd:"1",aiNew:"0",aiOrd:"0",phase:"" },
-              { date:"2025-11-27",total:"57",live:"29",video:"24",mall:"4",newVid:"5",recNew:"1",recOrd:"0",aiNew:"4",aiOrd:"0",phase:"" },
-              { date:"2025-11-28",total:"199",live:"151",video:"39",mall:"9",newVid:"3",recNew:"3",recOrd:"0",aiNew:"0",aiOrd:"0",phase:"小高峰" }
-            ]
-          },
-          {
-            id: 2,
-            startDate: "2025-11-29",
-            endDate: "2026-01-18",
-            name: "稳定期（录播/AI发力）",
-            status: "表现差",
-            analysis: "直播已停止（12月多周直播=0或极少）。录屏严重不足：除了12/15-12/21当周录屏出单60件，其余各周录屏出单0-1件。短视频接过主力，但各周出单仅1-61件/周，远未爆发。AI视频几乎不动（每周0-6件/周），未形成规模。",
-            analysisColor: "#e65100",
-            analysisBold: false,
-            rows: [
-              { date:"2025-11-29",total:"61",live:"1",video:"56",mall:"4",newVid:"1",recNew:"1",recOrd:"0",aiNew:"0",aiOrd:"0",phase:"" },
-              { date:"2025-11-30",total:"53",live:"2",video:"46",mall:"5",newVid:"1",recNew:"1",recOrd:"0",aiNew:"0",aiOrd:"0",phase:"" },
-              { date:"2025-12-01-12/07",total:"306",live:"13",video:"235",mall:"58",newVid:"7",recNew:"2",recOrd:"1",aiNew:"5",aiOrd:"0",phase:"维稳" },
-              { date:"2025-12/08-12/14",total:"196",live:"3",video:"146",mall:"47",newVid:"3",recNew:"0",recOrd:"0",aiNew:"3",aiOrd:"4",phase:"" },
-              { date:"2025-12/15-12/21",total:"213",live:"69",video:"115",mall:"29",newVid:"22",recNew:"15",recOrd:"60",aiNew:"5",aiOrd:"1",phase:"录屏发力" },
-              { date:"2025-12/22-12/28",total:"229",live:"24",video:"186",mall:"40",newVid:"17",recNew:"5",recOrd:"1",aiNew:"12",aiOrd:"6",phase:"" },
-              { date:"2025-12/29-1/4",total:"295",live:"0",video:"225",mall:"70",newVid:"18",recNew:"0",recOrd:"0",aiNew:"16",aiOrd:"6",phase:"" },
-              { date:"2026-1/5-1/11",total:"143",live:"0",video:"119",mall:"37",newVid:"15",recNew:"1",recOrd:"1",aiNew:"10",aiOrd:"0",phase:"样品期" },
-              { date:"2026-1/12-1/18",total:"396",live:"89",video:"194",mall:"113",newVid:"33",recNew:"12",recOrd:"10",aiNew:"5",aiOrd:"4",phase:"样品效果" }
-            ]
-          },
-          {
-            id: 3,
-            startDate: "2026-01-19",
-            endDate: "2026-03-18",
-            name: "爆发期（首批样品）",
-            status: "大爆",
-            analysis: "1/19-2/18: 短视频爆发3,160件，占总量89%。2/19-3/18: 巅峰3,925件，短视频3,393件(86%)。两个阶段合计短视频6,553件，占全期83%。直播仅贡献339件(4.3%)，完全由短视频驱动。",
-            analysisColor: "#c62828",
-            analysisBold: false,
-            rows: [
-              { date:"2026-1/19-2/18",total:"3543",live:"218",video:"3160",mall:"409",newVid:"426",recNew:"-",recOrd:"-",aiNew:"-",aiOrd:"-",phase:"爆发" },
-              { date:"2026-2/19-3/18",total:"3925",live:"121",video:"3393",mall:"411",newVid:"-",recNew:"-",recOrd:"-",aiNew:"-",aiOrd:"-",phase:"巅峰",isPeak:true }
-            ]
-          },
-          {
-            id: 4,
-            startDate: "2026-03-19",
-            endDate: "2026-04-18",
-            name: "稳定出单期",
-            status: "衰减",
-            analysis: "3/19-4/18: 衰减至1,648件(-58%)。短视频仍占81%(1,334/1,648)，直播略有回温(160件)。已完成完整爆款生命周期。",
-            analysisColor: "#1565c0",
-            analysisBold: false,
-            rows: [
-              { date:"2026-3/19-4/18",total:"1648",live:"160",video:"1334",mall:"154",newVid:"-",recNew:"-",recOrd:"-",aiNew:"-",aiOrd:"-",phase:"衰减" }
-            ]
-          },
-          {
-            id: 5,
-            startDate: "2026-04-19",
-            endDate: "",
-            name: "收尾阶段（衰减期）",
-            status: "衰减",
-            analysis: "4/19-至今: 仅247件，自然下滑趋势明显。短视频仍占主导，自然衰减阶段。已完成完整爆款生命周期。",
-            analysisColor: "#7b1fa2",
-            analysisBold: false,
-            rows: [
-              { date:"2026-4/19-至今",total:"247",live:"14",video:"188",mall:"45",newVid:"-",recNew:"-",recOrd:"-",aiNew:"-",aiOrd:"-",phase:"尾声" }
-            ]
-          }
-        ],
-        suggestions: [
-          { text: "测新后快速锁定小单样品，7天内完成首批样品采购，迅速分发。本案48天才寄样，严重延误爆款窗口。", color: "#333333", bold: false },
-          { text: "测新后录屏骤降(第一阶段后各周0-5条)，录屏每日保持10条以上，维稳期不能断档。", color: "#333333", bold: false },
-          { text: "本案AI视频各周仅0-16条，完全未形成规模。测新后立即启动AI视频生产，目标AI视频占短视频总量60%以上。", color: "#333333", bold: false },
-          { text: "测新一周后一般无直播，此时主播账号视频必须顶上，发样品之前一定要持续发视频维持热度，不能让流量断档。", color: "#333333", bold: false },
-          { text: "进入第三阶段后，增加破圈层达人发样，加大样品分发速度和分发数量，通过多层次达人触达更多潜在用户。", color: "#333333", bold: false }
-        ],
-        dashboard: [
-          { label: "总销量", value: "5309", sub: "初始值" },
-          { label: "短视频销量", value: "6553", sub: "占全期83%" },
-          { label: "直播销量", value: "339", sub: "占全期4.3%" },
-          { label: "爆款峰值", value: "3925", sub: "2/19-3/18月度" }
-        ]
-      }
-    };
+var defaultProducts = {
+  "FADUU25110716": {
+    "spu": "FADUU25110716",
+    "pid": "1733257836187584258",
+    "name": "[ready stock] FADFAD Gaun elegan bergaya retro",
+    "launchDate": "2025-11-17",
+    "sampleDate": "2026-01-06",
+    "grade": "SS",
+    "totalSales": "5309",
+    "price": "Rp215,000",
+    "rows": [
+      {"date":"11/17 上架","total":"1","live":"1","video":"0","mall":"0","newVid":"1","recNew":"1","recOrd":"1","aiNew":"0","aiOrd":"0","phase":"上架日","isPeak":false},
+      {"date":"11/18 峰值","total":"694","live":"650","video":"13","mall":"2","newVid":"56","recNew":"55","recOrd":"666","aiNew":"1","aiOrd":"1","phase":"爆发","isPeak":true},
+      {"date":"11/19","total":"163","live":"111","video":"38","mall":"14","newVid":"11","recNew":"11","recOrd":"6","aiNew":"0","aiOrd":"0","phase":"回落","isPeak":false},
+      {"date":"11/20","total":"83","live":"64","video":"15","mall":"13","newVid":"10","recNew":"7","recOrd":"4","aiNew":"2","aiOrd":"0","phase":"","isPeak":false},
+      {"date":"11/21","total":"76","live":"58","video":"8","mall":"12","newVid":"7","recNew":"4","recOrd":"1","aiNew":"3","aiOrd":"0","phase":"","isPeak":false},
+      {"date":"11/22","total":"78","live":"63","video":"7","mall":"8","newVid":"12","recNew":"11","recOrd":"2","aiNew":"1","aiOrd":"0","phase":"","isPeak":false},
+      {"date":"11/23","total":"15","live":"0","video":"9","mall":"6","newVid":"3","recNew":"3","recOrd":"1","aiNew":"0","aiOrd":"0","phase":"断播","isPeak":false},
+      {"date":"11/24","total":"49","live":"24","video":"18","mall":"7","newVid":"5","recNew":"1","recOrd":"0","aiNew":"4","aiOrd":"0","phase":"","isPeak":false},
+      {"date":"11/25","total":"32","live":"11","video":"16","mall":"5","newVid":"6","recNew":"2","recOrd":"0","aiNew":"4","aiOrd":"0","phase":"","isPeak":false},
+      {"date":"11/26","total":"51","live":"18","video":"21","mall":"12","newVid":"1","recNew":"1","recOrd":"1","aiNew":"0","aiOrd":"0","phase":"","isPeak":false},
+      {"date":"11/27","total":"57","live":"29","video":"24","mall":"4","newVid":"5","recNew":"1","recOrd":"0","aiNew":"4","aiOrd":"0","phase":"","isPeak":false},
+      {"date":"11/28","total":"199","live":"151","video":"39","mall":"9","newVid":"3","recNew":"3","recOrd":"0","aiNew":"0","aiOrd":"0","phase":"小高峰","isPeak":false},
+      {"date":"11/29","total":"61","live":"1","video":"56","mall":"4","newVid":"1","recNew":"1","recOrd":"0","aiNew":"0","aiOrd":"0","phase":"","isPeak":false},
+      {"date":"11/30","total":"53","live":"2","video":"46","mall":"5","newVid":"1","recNew":"1","recOrd":"0","aiNew":"0","aiOrd":"0","phase":"","isPeak":false}
+    ],
+    "weekRows": [
+      {"label":"12/1-12/7","total":"306","live":"13","video":"235","mall":"58","newVid":"7","recNew":"2","recOrd":"1","aiNew":"5","aiOrd":"0","phase":"","wkLabel":"short"},
+      {"label":"12/8-12/14","total":"196","live":"3","video":"146","mall":"47","newVid":"3","recNew":"0","recOrd":"0","aiNew":"3","aiOrd":"4","phase":"","wkLabel":"short"},
+      {"label":"12/15-12/21","total":"213","live":"69","video":"115","mall":"29","newVid":"22","recNew":"15","recOrd":"60","aiNew":"5","aiOrd":"1","phase":"","wkLabel":"short"},
+      {"label":"12/22-12/28","total":"229","live":"24","video":"186","mall":"40","newVid":"17","recNew":"5","recOrd":"1","aiNew":"12","aiOrd":"6","phase":"","wkLabel":"short"},
+      {"label":"12/29-1/4","total":"295","live":"0","video":"225","mall":"70","newVid":"18","recNew":"0","recOrd":"0","aiNew":"16","aiOrd":"6","phase":"","wkLabel":"short"},
+      {"label":"1/5-1/11","total":"143","live":"0","video":"119","mall":"37","newVid":"15","recNew":"1","recOrd":"1","aiNew":"10","aiOrd":"0","phase":"样品期","wkLabel":"ai","extraTag":"样品发出"},
+      {"label":"1/12-1/18","total":"396","live":"89","video":"194","mall":"113","newVid":"33","recNew":"12","recOrd":"10","aiNew":"5","aiOrd":"4","phase":"样品效果","wkLabel":"ai"}
+    ],
+    "monthRows": [
+      {"label":"1/19-2/18","total":"3543","live":"218","video":"3160","mall":"409","newVid":"426","phase":"爆发","isPeak":true},
+      {"label":"2/19-3/18","total":"3925","live":"121","video":"3393","mall":"411","newVid":"-","phase":"巅峰","isPeak":true},
+      {"label":"3/19-4/18","total":"1648","live":"160","video":"1334","mall":"154","newVid":"-","phase":"衰减"},
+      {"label":"4/19-至今","total":"247","live":"14","video":"188","mall":"45","newVid":"-","phase":"尾声"}
+    ],
+    "analysis": "[第一阶段] 直播测款期: 峰值694件(11/18), 直播650件占94%, 录屏贡献666件. 录屏是核心驱动力. 11/23直播断播后未恢复. 录屏第1天55条, 但后续日均仅1.2条, 严重不足.\n[第二阶段] 维稳热度期: 直播停止, 录屏严重不足(各周0-5条), 短视频接过主力但出单仅1-61件/周, 远未爆发. AI视频各周仅0-16条, 完全未形成规模.\n[第三/四阶段] 爆发期: 短视频爆发3,160+3,393件, 合计6,553件, 占全期83%.\n[第五阶段] 收尾期: 衰减至1,648件, 自然下滑.",
+    "summary": "核心问题: 1.寄样间隔48天超标; 2.录屏严重断档; 3.AI视频几乎未启动; 4.直播过早断播",
+    "suggestions": [
+      "测新后快速锁定小单样品, 7天内完成首批样品采购, 迅速分发. 本案48天才寄样, 严重延误爆款窗口.",
+      "测新后录屏骤降(第一阶段后各周0-5条), 录屏每日保持10条以上, 维稳期不能断档.",
+      "本案AI视频各周仅0-16条, 完全未形成规模. 测新后立即启动AI视频生产, 目标AI视频占短视频总量60%以上.",
+      "测新一周后一般无直播, 此时主播账号视频必须顶上, 发样品之前一定要持续发视频维持热度, 不能让流量断档.",
+      "进入第三阶段后, 增加破圈层达人发样, 加大样品分发速度和分发数量, 通过多层次达人触达更多潜在用户."
+    ]
   }
+};
 
-  // ========== UTILITIES ==========
-  function esc(s) {
-    if (s == null || s === undefined) return '';
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+var products = JSON.parse(JSON.stringify(defaultProducts));
+var activeId = 'FADUU25110716';
+var editTargetId = null;
+
+// ============ UTILITIES ============
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+  } catch (e) {
+    console.error('[saveData error]', e);
   }
+}
 
-  function num(s) { return parseFloat(String(s).replace(/[^\d.-]/g,'')) || 0; }
+function esc(s) {
+  if (!s && s !== 0) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
-  function debounce(fn, ms) {
-    var t;
-    return function() {
-      clearTimeout(t);
-      var args = arguments;
-      var self = this;
-      t = setTimeout(function() { fn.apply(self, args); }, ms);
-    };
-  }
+function num(s) { return parseFloat(s) || 0; }
 
-  function saveData() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
-    } catch(e) {
-      console.error('[saveData error]', e);
-    }
-  }
+function sumRows(r, f) {
+  return (r || []).reduce(function(a, b) { return a + num(b[f]); }, 0);
+}
 
-  var debouncedSave = debounce(saveData, 500);
+function calcAll(id) {
+  var p = products[id];
+  if (!p) return { ts: 0, lv: 0, vd: 0, ml: 0, vp: 0 };
+  var ts = sumRows(p.rows,'total') + sumRows(p.weekRows,'total') + sumRows(p.monthRows,'total');
+  var lv = sumRows(p.rows,'live') + sumRows(p.weekRows,'live') + sumRows(p.monthRows,'live');
+  var vd = sumRows(p.rows,'video') + sumRows(p.weekRows,'video') + sumRows(p.monthRows,'video');
+  var ml = sumRows(p.rows,'mall') + sumRows(p.weekRows,'mall') + sumRows(p.monthRows,'mall');
+  var vp = ts > 0 ? Math.round(vd / ts * 100) : 0;
+  return { ts: ts, lv: lv, vd: vd, ml: ml, vp: vp };
+}
 
-  // ========== INIT ==========
-  function init() {
-    try {
-      var raw = null;
-      try {
-        raw = localStorage.getItem(STORAGE_KEY);
-      } catch(e) {
-        console.error('[localStorage read error]', e);
-      }
-      if (raw) {
-        try {
-          var parsed = JSON.parse(raw);
-          if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
-            products = parsed;
-            var keys = Object.keys(products);
-            if (keys.length > 0) activeId = keys[0];
-          }
-        } catch(e) {
-          console.error('[JSON parse error]', e);
-        }
-      }
-      if (!activeId || !products[activeId]) {
-        products = getDefaultData();
-        activeId = 'FADUU25110716';
-        saveData();
-      }
+// ============ RENDER ============
+function renderProductList() {
+  var list = document.getElementById('product-list');
+  if (!list) return;
+  list.innerHTML = '';
+  var keys = Object.keys(products);
+  keys.forEach(function(id) {
+    var p = products[id];
+    var div = document.createElement('div');
+    div.className = 'product-item' + (id === activeId ? ' active' : '');
+    div.setAttribute('data-id', id);
+    div.innerHTML = '<span>' + esc(p.spu || id) + '</span><span class="del-btn" data-del-id="' + id + '">x</span>';
+    div.addEventListener('click', (function(iid) {
+      return function() {
+        activeId = iid;
+        renderProductList();
+        renderProduct(iid);
+      };
+    })(id));
+    list.appendChild(div);
+  });
+  // Delegate delete
+  list.onclick = null;
+  list.removeEventListener('click', handleListClick);
+  list.addEventListener('click', handleListClick);
+}
+
+function handleListClick(e) {
+  if (e.target.classList.contains('del-btn')) {
+    var id = e.target.getAttribute('data-del-id');
+    if (id && confirm('确认删除该产品?')) {
+      delete products[id];
+      saveData();
+      var k = Object.keys(products);
+      activeId = k.length > 0 ? k[0] : null;
       renderProductList();
-      if (activeId && products[activeId]) {
-        renderProduct(activeId);
-      } else {
-        renderEmpty();
-      }
-      bindGlobalEvents();
-      console.log('[FADFAD产品分析系统] Initialized. Active product:', activeId);
+      if (activeId) renderProduct(activeId);
+      else renderEmpty();
+    }
+  }
+}
+
+function renderEmpty() {
+  var m = document.getElementById('main-area');
+  if (!m) return;
+  var emptyDiv = document.getElementById('empty-state');
+  if (!emptyDiv) {
+    m.innerHTML = '<div class="empty-state" id="empty-state"><div class="icon">&#128230;</div><p>暂无产品</p><button class="btn btn-primary" id="btn-add-first">+ 添加第一个产品</button></div>';
+    var b = document.getElementById('btn-add-first');
+    if (b) b.addEventListener('click', openAddProduct);
+  }
+}
+
+function renderProduct(id) {
+  var p = products[id];
+  if (!p) return;
+  var tot = calcAll(id);
+  var sampleInt = '';
+  if (p.launchDate && p.sampleDate) {
+    var ms = new Date(p.sampleDate) - new Date(p.launchDate);
+    sampleInt = Math.round(ms / 86400000) + '天';
+  }
+
+  // Build daily rows HTML
+  var dailyRows = [];
+  (p.rows || []).forEach(function(r, i) {
+    var pk = r.isPeak ? ' peak' : '';
+    var phC = (r.phase === '爆发' || r.phase === '上架日') ? 'r' : (r.phase === '回落' || r.phase === '小高峰' || r.phase === '断播' ? 'o' : '');
+    dailyRows.push('<tr class="' + pk + '">' +
+      '<td class="dt">' + esc(r.date) + '</td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.total) + '" data-idx="' + i + '" data-f="total"></td>' +
+      '<td class="num g"><input class="editable" value="' + esc(r.live) + '" data-idx="' + i + '" data-f="live"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.video) + '" data-idx="' + i + '" data-f="video"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.mall) + '" data-idx="' + i + '" data-f="mall"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.newVid) + '" data-idx="' + i + '" data-f="newVid"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.recNew) + '" data-idx="' + i + '" data-f="recNew"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.recOrd) + '" data-idx="' + i + '" data-f="recOrd"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.aiNew) + '" data-idx="' + i + '" data-f="aiNew"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.aiOrd) + '" data-idx="' + i + '" data-f="aiOrd"></td>' +
+      '<td class="' + phC + '"><input class="editable" value="' + esc(r.phase) + '" data-idx="' + i + '" data-f="phase"></td>' +
+    '</tr>');
+  });
+  var dailyHTML = dailyRows.join('');
+
+  // Build weekly rows HTML
+  var weekRows = [];
+  (p.weekRows || []).forEach(function(r, i) {
+    var wkC = r.wkLabel === 'ai' ? 'wk-label ai' : (r.wkLabel === 'short' ? 'wk-label short' : 'wk-label');
+    weekRows.push('<tr class="' + wkC + '"><td colspan="11" style="text-align:left;padding-left:12px;font-size:10px">' + esc(r.label || '') + (r.extraTag ? ' <span class="red-tag">' + r.extraTag + '</span>' : '') + '</td></tr>');
+    weekRows.push('<tr>' +
+      '<td class="dt"><input class="editable" value="' + esc(r.label) + '" data-widx="' + i + '" data-f="label"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.total) + '" data-widx="' + i + '" data-f="total"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.live) + '" data-widx="' + i + '" data-f="live"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.video) + '" data-widx="' + i + '" data-f="video"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.mall) + '" data-widx="' + i + '" data-f="mall"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.newVid) + '" data-widx="' + i + '" data-f="newVid"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.recNew) + '" data-widx="' + i + '" data-f="recNew"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.recOrd) + '" data-widx="' + i + '" data-f="recOrd"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.aiNew) + '" data-widx="' + i + '" data-f="aiNew"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.aiOrd) + '" data-widx="' + i + '" data-f="aiOrd"></td>' +
+      '<td><input class="editable" value="' + esc(r.phase) + '" data-widx="' + i + '" data-f="phase"></td>' +
+    '</tr>');
+  });
+  var weekHTML = weekRows.join('');
+
+  // Build monthly rows HTML
+  var monthRows = [];
+  (p.monthRows || []).forEach(function(r, i) {
+    var pk2 = r.isPeak ? ' peak2' : '';
+    monthRows.push('<tr class="' + pk2 + '">' +
+      '<td class="dt"><input class="editable" value="' + esc(r.label) + '" data-midx="' + i + '" data-f="label"></td>' +
+      '<td class="num r"><input class="editable" value="' + esc(r.total) + '" data-midx="' + i + '" data-f="total"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.live) + '" data-midx="' + i + '" data-f="live"></td>' +
+      '<td class="num o2"><input class="editable" value="' + esc(r.video) + '" data-midx="' + i + '" data-f="video"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.mall) + '" data-midx="' + i + '" data-f="mall"></td>' +
+      '<td class="num"><input class="editable" value="' + esc(r.newVid) + '" data-midx="' + i + '" data-f="newVid"></td>' +
+      '<td class="dim">-</td><td class="dim">-</td><td class="dim">-</td><td class="dim">-</td>' +
+      '<td class="' + (r.isPeak ? 'r' : 'o2') + '"><input class="editable" value="' + esc(r.phase) + '" data-midx="' + i + '" data-f="phase"></td>' +
+    '</tr>');
+  });
+  var monthHTML = monthRows.join('');
+
+  // Suggestions
+  var sugTitles = ['小单样品快速响应', '录屏持续发力', 'AI视频扩大规模', '主播账号+维持热度', '达人分层破圈'];
+  var sugHTML = '';
+  for (var si = 0; si < 5; si++) {
+    var s = (p.suggestions && p.suggestions[si]) ? p.suggestions[si] : '';
+    sugHTML += '<div class="sug-card s' + (si + 1) + '"><h4><span class="num">' + (si + 1) + '</span>' + esc(sugTitles[si] || '') + '</h4><textarea class="editable" style="min-height:60px" data-sug="' + si + '">' + esc(s) + '</textarea></div>';
+  }
+
+  // Dashboard cards
+  var dashHTML = '';
+  var allKeys = Object.keys(products);
+  for (var di = 0; di < allKeys.length; di++) {
+    var pid = allKeys[di];
+    var pp = products[pid];
+    var t = calcAll(pid);
+    var isA = pid === id;
+    dashHTML += '<div class="dash-card' + (isA ? '' : ' inactive') + '" data-switch="' + pid + '">' +
+      '<div class="dc-label">' + esc(pp.spu || '') + '</div>' +
+      '<div class="dc-val">' + t.ts.toLocaleString() + '</div>' +
+      '<div class="dc-sub">短视频 ' + t.vd.toLocaleString() + ' (' + t.vp + '%)</div>' +
+      (pp.summary ? '<div class="dc-note">' + esc(pp.summary.substring(0, 50)) + (pp.summary.length > 50 ? '...' : '') + '</div>' : '') +
+    '</div>';
+  }
+
+  // Phase analysis cards
+  var anaCards = [
+    {cls:'p1', tagBg:'e8f5e9', tagColor:'2e7d32', tag:'第一阶段', title:'链接活跃期 11/17-11/28', li:[
+      '11/18峰值694件, 直播650件占94%, 录屏贡献666件', '录屏是核心驱动力: 11/18录屏新增55条, 出单666件', '11/23直播断播, 之后直播再未恢复', '11/28小高峰(199件), 之后进入低谷'
+    ]},
+    {cls:'p2', tagBg:'fff3e0', tagColor:'e65100', tag:'第二阶段', title:'维稳热度期 11/29-1/18 表现差', li:[
+      '直播已停止(12月多周直播=0或极少)', '录屏严重不足: 除了12/15-12/21当周录屏出单60件, 其余各周录屏出单0-1件', '短视频接过主力, 但各周出单仅1-61件/周, 远未爆发', 'AI视频几乎不动(每周0-6件/周), 未形成规模'
+    ]},
+    {cls:'p3', tagBg:'ffebee', tagColor:'c62828', tag:'第三/四阶段', title:'爆发期 1/19-3/18', li:[
+      '1/19-2/18: 短视频爆发3,160件, 占总量89%', '2/19-3/18: 巅峰3,925件, 短视频3,393件(86%)', '两个阶段合计短视频6,553件, 占全期83%', '直播仅贡献339件(4.3%), 完全由短视频驱动'
+    ]},
+    {cls:'p4', tagBg:'f3e5f5', tagColor:'7b1fa2', tag:'第五阶段', title:'收尾期 3/19-至今', li:[
+      '3/19-4/18: 衰减至1,648件(-58%)', '4/19-至今: 仅247件, 自然下滑趋势明显', '短视频仍占81%(1,334/1,648), 直播略有回温(160件)', '已完成完整爆款生命周期'
+    ]}
+  ];
+  var anaCardsHTML = '';
+  for (var ai = 0; ai < anaCards.length; ai++) {
+    var a = anaCards[ai];
+    var liItems = [];
+    for (var li = 0; li < a.li.length; li++) {
+      liItems.push('<li>' + esc(a.li[li]) + '</li>');
+    }
+    anaCardsHTML += '<div class="acard ' + a.cls + '"><h3><span class="tag" style="background:#' + a.tagBg + ';color:#' + a.tagColor + '">' + esc(a.tag) + '</span> ' + esc(a.title) + '</h3><ul>' + liItems.join('') + '</ul></div>';
+  }
+
+  var html = '<div class="toolbar">' +
+    '<button class="btn btn-primary btn-sm" id="btn-edit-product">编辑产品信息</button>' +
+    '<button class="btn btn-success btn-sm" id="btn-auto-analyze">&#9733; 自动分析</button>' +
+    '<button class="btn btn-outline btn-sm" id="btn-refresh">刷新</button>' +
+  '</div>' +
+
+  '<div style="background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,0.06);padding:18px 20px;margin-bottom:16px">' +
+    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap">' +
+      '<span style="font-size:16px;font-weight:800;color:#1a237e">' + esc(p.spu || '') + '</span>' +
+      '<span style="background:#FF7F0E;color:#fff;font-size:11px;padding:2px 10px;border-radius:10px;font-weight:700">' + esc(p.grade || '') + '</span>' +
+      '<span style="font-size:11px;color:#999;margin-left:auto">' + esc(p.name || '') + '</span>' +
+    '</div>' +
+    '<div class="overview" style="margin:0">' +
+      '<div class="ov"><div class="lbl">上架日期</div><div class="val">' + esc(p.launchDate || '-') + '</div></div>' +
+      '<div class="ov"><div class="lbl">首次寄样</div><div class="val red">' + esc(p.sampleDate || '-') + (sampleInt ? '<div class="sub">间隔' + sampleInt + '</div>' : '') + '</div></div>' +
+      '<div class="ov"><div class="lbl">总销量</div><div class="val blue">' + (parseInt(p.totalSales) || tot.ts).toLocaleString() + '</div><div class="sub">短视频 ' + tot.vp + '%</div></div>' +
+      '<div class="ov"><div class="lbl">直播销量</div><div class="val green">' + tot.lv.toLocaleString() + '</div></div>' +
+      '<div class="ov"><div class="lbl">短视频销量</div><div class="val orange">' + tot.vd.toLocaleString() + '</div></div>' +
+      '<div class="ov"><div class="lbl">测试价</div><div class="val">' + esc(p.price || '-') + '</div></div>' +
+    '</div>' +
+  '</div>' +
+
+  '<div class="sec-title">爆款运营阶段时间轴</div>' +
+  '<div class="phases">' +
+    '<div class="phase on"><div class="num">第一阶段</div><div class="name">链接活跃期<br>直播测款</div><div class="date">11/17-11/28</div><div class="st ok">成功</div></div>' +
+    '<div class="phase"><div class="num">第二阶段</div><div class="name">维稳热度期<br>录屏不足</div><div class="date">11/29-1/5</div><div class="st warn">表现差</div></div>' +
+    '<div class="phase"><div class="num">第三阶段</div><div class="name">样品期<br>短视频爆发</div><div class="date">1/6-2/18</div><div class="st ok">小爆</div></div>' +
+    '<div class="phase"><div class="num">第四阶段</div><div class="name">爆量阶段<br>短视频占86%</div><div class="date">2/19-3/18</div><div class="st ok">大爆</div></div>' +
+    '<div class="phase"><div class="num">第五阶段</div><div class="name">收尾阶段<br>衰减</div><div class="date">3/19-至今</div><div class="st warn">衰减</div></div>' +
+    '<div class="phase"><div class="num">核心问题</div><div class="name">寄样48天超期<br>录屏/AI断档</div><div class="date">改进点</div><div class="st delay">延误</div></div>' +
+  '</div>' +
+
+  '<div class="sec-title">每日销量明细</div>' +
+  '<div style="overflow-x:auto;margin-bottom:16px">' +
+    '<table class="data-table" id="table-daily"><thead><tr>' +
+      '<th>日期</th><th class="s1">总销量</th><th class="s1">直播销量</th><th class="s1">短视频销量</th><th class="s1">商城销量</th>' +
+      '<th class="s2">新增视频</th><th class="s2">录屏新增</th><th class="s2">录屏出单</th><th class="s2">AI新增</th><th class="s2">AI出单</th><th>阶段</th>' +
+    '</tr></thead><tbody></tbody></table>' +
+    '<button class="add-row-btn" id="btn-add-daily">+ 添加一行</button>' +
+  '</div>' +
+
+  '<div class="sec-title">每周数据(7天汇总,总量)</div>' +
+  '<div style="overflow-x:auto;margin-bottom:16px">' +
+    '<table class="data-table" id="table-week"><thead><tr>' +
+      '<th>周期</th><th>总销量</th><th class="s1">直播</th><th class="s1">短视频</th><th class="s1">商城</th>' +
+      '<th class="s2">新增视频</th><th class="s2">录屏新增</th><th class="s2">录屏出单</th><th class="s2">AI新增</th><th class="s2">AI出单</th><th>阶段</th>' +
+    '</tr></thead><tbody></tbody></table>' +
+    '<button class="add-row-btn" id="btn-add-week">+ 添加一周</button>' +
+  '</div>' +
+
+  '<div class="sec-title">每月数据(月度总量)</div>' +
+  '<div style="overflow-x:auto;margin-bottom:16px">' +
+    '<table class="data-table" id="table-month"><thead><tr>' +
+      '<th>周期</th><th>总销量</th><th class="s1">直播</th><th class="s1">短视频</th><th class="s1">商城</th>' +
+      '<th class="s2">新增视频</th><th class="s2">录屏</th><th class="s2">录屏出单</th><th class="s2">AI新增</th><th class="s2">AI出单</th><th>阶段</th>' +
+    '</tr></thead><tbody></tbody></table>' +
+    '<button class="add-row-btn" id="btn-add-month">+ 添加一月</button>' +
+  '</div>' +
+
+  '<div class="sec-title">各阶段分析</div>' +
+  '<div class="ana-grid">' + anaCardsHTML + '</div>' +
+
+  '<div class="sec-title">运营分析建议</div>' +
+  '<div class="panel-wrap">' +
+    '<textarea class="editable" id="ta-analysis" style="min-height:80px;margin-bottom:10px">' + esc(p.analysis || '') + '</textarea>' +
+    '<label class="lbl">核心问题简短总结</label>' +
+    '<textarea class="editable" id="ta-summary" style="min-height:50px">' + esc(p.summary || '') + '</textarea>' +
+  '</div>' +
+
+  '<div class="sec-title">改进建议</div>' +
+  '<div class="sug-grid" id="sug-grid">' + sugHTML + '</div>' +
+
+  '<div class="sec-title">全产品汇总看板</div>' +
+  '<div class="dash-grid" id="dash-grid">' + dashHTML + '</div>';
+
+  document.getElementById('main-area').innerHTML = html;
+
+  // Bind toolbar buttons
+  var btnEdit = document.getElementById('btn-edit-product');
+  if (btnEdit) btnEdit.addEventListener('click', function() { openEdit(id); });
+
+  var btnAna = document.getElementById('btn-auto-analyze');
+  if (btnAna) btnAna.addEventListener('click', function() { doAutoAnalyze(id); });
+
+  var btnRef = document.getElementById('btn-refresh');
+  if (btnRef) btnRef.addEventListener('click', function() { renderProduct(id); });
+
+  // Bind main area change events (delegated)
+  var mainEl = document.getElementById('main-area');
+  mainEl.removeEventListener('change', handleMainChange);
+  mainEl.addEventListener('change', handleMainChange);
+
+  // Add row buttons
+  var btnAddD = document.getElementById('btn-add-daily');
+  if (btnAddD) btnAddD.addEventListener('click', function() {
+    if (!products[id].rows) products[id].rows = [];
+    products[id].rows.push({date:'',total:'',live:'',video:'',mall:'',newVid:'',recNew:'',recOrd:'',aiNew:'',aiOrd:'',phase:'',isPeak:false});
+    saveData();
+    renderProduct(id);
+  });
+
+  var btnAddW = document.getElementById('btn-add-week');
+  if (btnAddW) btnAddW.addEventListener('click', function() {
+    if (!products[id].weekRows) products[id].weekRows = [];
+    products[id].weekRows.push({label:'',total:'',live:'',video:'',mall:'',newVid:'',recNew:'',recOrd:'',aiNew:'',aiOrd:'',phase:'',wkLabel:'short'});
+    saveData();
+    renderProduct(id);
+  });
+
+  var btnAddM = document.getElementById('btn-add-month');
+  if (btnAddM) btnAddM.addEventListener('click', function() {
+    if (!products[id].monthRows) products[id].monthRows = [];
+    products[id].monthRows.push({label:'',total:'',live:'',video:'',mall:'',newVid:'-',phase:''});
+    saveData();
+    renderProduct(id);
+  });
+
+  // Dashboard click
+  var dashEl = document.getElementById('dash-grid');
+  if (dashEl) {
+    dashEl.removeEventListener('click', handleDashClick);
+    dashEl.addEventListener('click', handleDashClick);
+  }
+
+  // Fill table bodies
+  var tbodyD = document.querySelector('#table-daily tbody');
+  if (tbodyD) tbodyD.innerHTML = dailyHTML;
+  var tbodyW = document.querySelector('#table-week tbody');
+  if (tbodyW) tbodyW.innerHTML = weekHTML;
+  var tbodyM = document.querySelector('#table-month tbody');
+  if (tbodyM) tbodyM.innerHTML = monthHTML;
+}
+
+function handleMainChange(e) {
+  var el = e.target;
+  if (!el.classList.contains('editable')) return;
+  var id = activeId;
+  if (!id || !products[id]) return;
+
+  var idx = el.getAttribute('data-idx');
+  var widx = el.getAttribute('data-widx');
+  var midx = el.getAttribute('data-midx');
+  var sug = el.getAttribute('data-sug');
+  var f = el.getAttribute('data-f');
+  var v = el.value;
+
+  try {
+    if (idx !== null && f) {
+      products[id].rows[parseInt(idx)][f] = v;
+      saveData();
+    } else if (widx !== null && f) {
+      products[id].weekRows[parseInt(widx)][f] = v;
+      saveData();
+    } else if (midx !== null && f) {
+      products[id].monthRows[parseInt(midx)][f] = v;
+      saveData();
+    } else if (sug !== null) {
+      if (!products[id].suggestions) products[id].suggestions = ['','','','',''];
+      products[id].suggestions[parseInt(sug)] = v;
+      saveData();
+    } else if (el.id === 'ta-analysis') {
+      products[id].analysis = v;
+      saveData();
+    } else if (el.id === 'ta-summary') {
+      products[id].summary = v;
+      saveData();
+    }
+  } catch(err) {
+    console.error('[handleMainChange error]', err);
+  }
+}
+
+function handleDashClick(e) {
+  var el = e.target.closest('.dash-card');
+  if (el) {
+    var pid = el.getAttribute('data-switch');
+    if (pid && products[pid]) {
+      activeId = pid;
+      renderProductList();
+      renderProduct(pid);
+    }
+  }
+}
+
+// ============ MODAL ============
+function openAddProduct() {
+  editTargetId = null;
+  document.getElementById('modal-title').textContent = '添加新产品';
+  document.getElementById('m-spu').value = '';
+  document.getElementById('m-pid').value = '';
+  document.getElementById('m-name').value = '';
+  document.getElementById('m-date').value = '2025-11-17';
+  document.getElementById('m-sample').value = '';
+  document.getElementById('m-grade').value = '';
+  document.getElementById('m-total').value = '';
+  document.getElementById('m-price').value = '';
+  document.getElementById('modal-product').classList.remove('hidden');
+  document.getElementById('m-spu').focus();
+}
+
+function openEdit(id) {
+  editTargetId = id;
+  var p = products[id];
+  document.getElementById('modal-title').textContent = '编辑产品';
+  document.getElementById('m-spu').value = p.spu || '';
+  document.getElementById('m-pid').value = p.pid || '';
+  document.getElementById('m-name').value = p.name || '';
+  document.getElementById('m-date').value = p.launchDate || '';
+  document.getElementById('m-sample').value = p.sampleDate || '';
+  document.getElementById('m-grade').value = p.grade || '';
+  document.getElementById('m-total').value = p.totalSales || '';
+  document.getElementById('m-price').value = p.price || '';
+  document.getElementById('modal-product').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('modal-product').classList.add('hidden');
+}
+
+function doAddProduct() {
+  var spu = document.getElementById('m-spu').value.trim();
+  if (!spu) { alert('请输入SPU编号'); return; }
+  try {
+    if (editTargetId) {
+      var pp = products[editTargetId];
+      pp.spu = spu;
+      pp.pid = document.getElementById('m-pid').value.trim();
+      pp.name = document.getElementById('m-name').value.trim();
+      pp.launchDate = document.getElementById('m-date').value;
+      pp.sampleDate = document.getElementById('m-sample').value;
+      pp.grade = document.getElementById('m-grade').value.trim();
+      pp.totalSales = document.getElementById('m-total').value.trim();
+      pp.price = document.getElementById('m-price').value.trim();
+      saveData();
+      closeModal();
+      renderProductList();
+      renderProduct(editTargetId);
+      return;
+    }
+    var nid = 'prod_' + Date.now();
+    products[nid] = {
+      spu: spu,
+      pid: document.getElementById('m-pid').value.trim(),
+      name: document.getElementById('m-name').value.trim(),
+      launchDate: document.getElementById('m-date').value,
+      sampleDate: document.getElementById('m-sample').value,
+      grade: document.getElementById('m-grade').value.trim(),
+      totalSales: document.getElementById('m-total').value.trim(),
+      price: document.getElementById('m-price').value.trim(),
+      rows: [], weekRows: [], monthRows: [],
+      analysis: '', summary: '', suggestions: ['','','','','']
+    };
+    saveData();
+    closeModal();
+    activeId = nid;
+    renderProductList();
+    renderProduct(nid);
+  } catch(err) {
+    console.error('[doAddProduct error]', err);
+    alert('操作失败: ' + err.message);
+  }
+}
+
+// ============ AUTO ANALYZE ============
+function doAutoAnalyze(id) {
+  document.getElementById('analyzing').classList.remove('hidden');
+  setTimeout(function() {
+    try {
+      var result = autoAnalyze(id);
+      products[id].analysis = result.analysis;
+      products[id].summary = result.summary;
+      products[id].suggestions = result.suggestions;
+      saveData();
     } catch(err) {
-      console.error('[Init error]', err);
+      console.error('[doAutoAnalyze error]', err);
+    }
+    document.getElementById('analyzing').classList.add('hidden');
+    renderProduct(id);
+  }, 800);
+}
+
+function autoAnalyze(id) {
+  var p = products[id];
+  if (!p) return { analysis: '', summary: '', suggestions: ['','','','',''] };
+
+  var daily = p.rows || [];
+  var weeks = p.weekRows || [];
+  var months = p.monthRows || [];
+
+  var ts = sumRows(daily,'total') + sumRows(weeks,'total') + sumRows(months,'total');
+  var lv = sumRows(daily,'live') + sumRows(weeks,'live') + sumRows(months,'live');
+  var vd = sumRows(daily,'video') + sumRows(weeks,'video') + sumRows(months,'video');
+  var ml = sumRows(daily,'mall') + sumRows(weeks,'mall') + sumRows(months,'mall');
+  var vp = ts > 0 ? Math.round(vd / ts * 100) : 0;
+
+  var peakDay = null, peakVal = 0;
+  for (var i = 0; i < daily.length; i++) {
+    var v = num(daily[i].total);
+    if (v > peakVal) { peakVal = v; peakDay = daily[i].date; }
+  }
+
+  var livePeakDay = null, livePeakVal = 0;
+  for (var i2 = 0; i2 < daily.length; i2++) {
+    var v2 = num(daily[i2].live);
+    if (v2 > livePeakVal) { livePeakVal = v2; livePeakDay = daily[i2].date; }
+  }
+
+  var recTotal = sumRows(daily,'recNew');
+  var recOrdTotal = sumRows(daily,'recOrd') + sumRows(weeks,'recOrd');
+  var aiTotal = sumRows(daily,'aiNew') + sumRows(weeks,'aiNew');
+  var aiOrdTotal = sumRows(daily,'aiOrd') + sumRows(weeks,'aiOrd');
+
+  var recDay1 = 0, recOtherSum = 0, recOtherDays = 0;
+  for (var i3 = 0; i3 < daily.length; i3++) {
+    var rv = num(daily[i3].recNew);
+    if (i3 === 1) recDay1 = rv;
+    else if (i3 > 1 && rv > 0) { recOtherSum += rv; recOtherDays++; }
+  }
+  var recOtherAvg = recOtherDays > 0 ? Math.round((recOtherSum / recOtherDays) * 10) / 10 : 0;
+
+  var aiStartDay = null;
+  for (var i4 = 0; i4 < daily.length; i4++) {
+    if (num(daily[i4].aiNew) > 0 && !aiStartDay) aiStartDay = daily[i4].date;
+  }
+  if (!aiStartDay) {
+    for (var i5 = 0; i5 < weeks.length; i5++) {
+      if (num(weeks[i5].aiNew) > 0 && !aiStartDay) aiStartDay = weeks[i5].label;
     }
   }
 
-  // ========== BIND GLOBAL EVENTS ==========
-  function bindGlobalEvents() {
+  var liveStopDay = null;
+  for (var i6 = 2; i6 < daily.length; i6++) {
+    if (num(daily[i6].live) === 0 && num(daily[i6-1].live) > 0) {
+      liveStopDay = daily[i6].date;
+      break;
+    }
+  }
+
+  var sampleGap = '';
+  if (p.launchDate && p.sampleDate) {
+    var ms = new Date(p.sampleDate) - new Date(p.launchDate);
+    sampleGap = Math.round(ms / 86400000) + '天';
+  }
+
+  var vdPct = ts > 0 ? Math.round(vd / ts * 100) : 0;
+  var lvPct = ts > 0 ? Math.round(lv / ts * 100) : 0;
+
+  var analysis = '';
+  analysis += '[第一阶段] 直播测款期: ' + (peakDay ? '峰值' + peakVal + '件(' + peakDay + ')' : '') + (lvPct > 50 ? '直播占比' + lvPct + '%为绝对主力' : '短视频占比更高') + '. 录屏新增' + recTotal + '条, 出单' + recOrdTotal + '件.' + (liveStopDay ? '直播在' + liveStopDay + '后停止.' : '') + ' 录屏第1天' + recDay1 + '条, 但后续日均仅' + recOtherAvg + '条, 严重不足.\n';
+  analysis += '[第二阶段] 维稳热度期: 直播停止(' + lvPct + '%), 录屏骤降日均' + recOtherAvg + '条, 远未爆发. 短视频接过主力但出单平淡. AI视频累计' + aiTotal + '条, 出单' + aiOrdTotal + '件.' + (aiStartDay ? ' 在' + aiStartDay + '开始有AI视频.' : '') + '\n';
+  analysis += '[第三/四阶段] 爆发期: 短视频占' + vdPct + '%, ' + (vdPct > 70 ? '短视频成为绝对主力' : '短视频占重要比例') + '. 录屏持续发力, AI视频加速.\n';
+  analysis += '[第五阶段] 收尾期: 销量自然下滑, ' + (ts > 0 ? '累计总销量' + ts.toLocaleString() + '件' : '') + '.\n';
+
+  var problems = [];
+  if (sampleGap && parseInt(sampleGap) > 30) problems.push('寄样间隔' + sampleGap + '超标(应30天内)');
+  if (recOtherAvg < 3) problems.push('录屏严重断档(后续日均仅' + recOtherAvg + '条)');
+  if (aiTotal < 50) problems.push('AI视频未形成规模(累计' + aiTotal + '条)');
+  if (liveStopDay) problems.push('直播过早断播(' + liveStopDay + '后停止)');
+
+  var summary = '核心问题: ' + (problems.length > 0 ? problems.join('; ') : '暂无明显问题');
+
+  var sug0 = '测新后快速锁定小单样品, 7天内完成首批样品采购, 迅速分发. 本品寄样间隔' + sampleGap + (sampleGap && parseInt(sampleGap) > 30 ? ', 严重延误爆款窗口.' : ', 符合标准.');
+  var sug1 = '录屏每日保持10条以上, 维稳期不能断档. 本品录屏第1天' + recDay1 + '条, 但后续骤降, ' + (recOtherAvg < 3 ? '严重不足, 需重点改进.' : '基本达标.');
+  var sug2 = '测新后立即启动AI视频生产, 目标AI视频占短视频总量60%以上. 本品AI视频' + aiTotal + '条, ' + (aiTotal < 100 ? '未形成规模, 需大力扩展.' : '已具备一定规模.');
+  var sug3 = '测新一周后一般无直播, 主播账号视频必须顶上, 发样品之前一定要持续发视频维持热度, 不能让流量断档.' + (liveStopDay ? ' 本例直播在' + liveStopDay + '后停止, 需加强视频接棒.' : '');
+  var sug4 = '进入第三阶段后, 增加破圈层达人发样, 加大样品分发速度和分发数量, 通过多层次达人触达更多潜在用户.';
+
+  return {
+    analysis: analysis,
+    summary: summary,
+    suggestions: [sug0, sug1, sug2, sug3, sug4]
+  };
+}
+
+// ============ INIT ============
+(function init() {
+  try {
+    // Load from localStorage
+    var raw = null;
+    try {
+      raw = localStorage.getItem(STORAGE_KEY);
+    } catch(e) {
+      console.error('[localStorage read error]', e);
+    }
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
+          products = parsed;
+          var keys = Object.keys(products);
+          if (keys.length > 0) activeId = keys[0];
+        }
+      } catch(e) {
+        console.error('[JSON parse error]', e);
+      }
+    }
+
+    renderProductList();
+    if (activeId && products[activeId]) {
+      renderProduct(activeId);
+    } else {
+      renderEmpty();
+    }
+
+    // Bind sidebar add button
     var btnAddProd = document.getElementById('btn-add-product');
     if (btnAddProd) btnAddProd.addEventListener('click', openAddProduct);
 
+    // Bind empty state add button
     var btnAddFirst = document.getElementById('btn-add-first');
     if (btnAddFirst) btnAddFirst.addEventListener('click', openAddProduct);
 
+    // Bind modal buttons
     var btnCancel = document.getElementById('btn-modal-cancel');
     if (btnCancel) btnCancel.addEventListener('click', closeModal);
 
     var btnConfirm = document.getElementById('btn-modal-confirm');
     if (btnConfirm) btnConfirm.addEventListener('click', doAddProduct);
 
-    document.getElementById('modal-product').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
+    console.log('[SPU Analysis] Initialized successfully. Active product:', activeId);
+
+  } catch(err) {
+    console.error('[Init error]', err);
   }
-
-  // ========== RENDER PRODUCT LIST ==========
-  function renderProductList() {
-    var list = document.getElementById('product-list');
-    if (!list) return;
-    list.innerHTML = '';
-    var keys = Object.keys(products);
-    keys.forEach(function(id) {
-      var p = products[id];
-      var div = document.createElement('div');
-      div.className = 'product-item' + (id === activeId ? ' active' : '');
-      div.setAttribute('data-id', id);
-      div.innerHTML = '<span>' + esc(p.spu || id) + '</span><button class="del-btn" data-del-id="' + esc(id) + '" title="删除">×</button>';
-      div.addEventListener('click', (function(iid) {
-        return function(e) {
-          if (e.target.classList.contains('del-btn')) {
-            if (iid && confirm('确认删除该产品？')) {
-              delete products[iid];
-              saveData();
-              var k = Object.keys(products);
-              activeId = k.length > 0 ? k[0] : null;
-              renderProductList();
-              if (activeId && products[activeId]) renderProduct(activeId);
-              else renderEmpty();
-            }
-          } else {
-            activeId = iid;
-            renderProductList();
-            renderProduct(iid);
-          }
-        };
-      })(id));
-      list.appendChild(div);
-    });
-  }
-
-  // ========== RENDER EMPTY ==========
-  function renderEmpty() {
-    var m = document.getElementById('main-area');
-    if (!m) return;
-    m.innerHTML = '<div class="empty-state" id="empty-state"><div class="icon">📦</div><p>暂无产品</p><button class="btn btn-primary" id="btn-add-first">+ 添加第一个产品</button></div>';
-    var b = document.getElementById('btn-add-first');
-    if (b) b.addEventListener('click', openAddProduct);
-  }
-
-  // ========== RENDER PRODUCT ==========
-  function renderProduct(id) {
-    var p = products[id];
-    if (!p) return;
-
-    // Compute live/video totals from all phase rows
-    var liveTotal = 0, videoTotal = 0;
-    (p.phases || []).forEach(function(ph) {
-      (ph.rows || []).forEach(function(r) {
-        liveTotal += num(r.live);
-        videoTotal += num(r.video);
-      });
-    });
-
-    var sampleInt = '';
-    if (p.launchDate && p.sampleDate) {
-      var ms = new Date(p.sampleDate) - new Date(p.launchDate);
-      sampleInt = Math.round(ms / 86400000) + '天';
-    }
-
-    // Overview cards
-    var overviewHTML =
-      '<div class="overview">' +
-        '<div class="ov"><div class="lbl">上架日期</div><div class="val blue">' + esc(p.launchDate || '-') + '</div></div>' +
-        '<div class="ov"><div class="lbl">首次寄样</div><div class="val red">' + esc(p.sampleDate || '-') + (sampleInt ? '<div class="sub">间隔' + sampleInt + '</div>' : '') + '</div></div>' +
-        '<div class="ov"><div class="lbl">总销量</div><div class="val blue">' + (parseInt(p.totalSales) || 0).toLocaleString() + '</div><div class="sub">初始值</div></div>' +
-        '<div class="ov"><div class="lbl">直播销量</div><div class="val green">' + liveTotal.toLocaleString() + '</div></div>' +
-        '<div class="ov"><div class="lbl">短视频销量</div><div class="val orange">' + videoTotal.toLocaleString() + '</div></div>' +
-        '<div class="ov"><div class="lbl">测试价</div><div class="val">' + esc(p.price || '-') + '</div></div>' +
-      '</div>';
-
-    // Phase timeline
-    var timelineHTML = '<div class="phase-timeline">';
-    for (var pi = 0; pi < PHASE_DEFS.length; pi++) {
-      var pd = PHASE_DEFS[pi];
-      var ph = (p.phases || [])[pi] || {};
-      var phClass = 'p' + pd.id;
-      var sColor = pd.color;
-      var statusText = ph.status || STATUS_OPTIONS[0];
-      timelineHTML +=
-        '<div class="phase-col ' + phClass + '">' +
-          '<div class="pnum">' + pd.id + '</div>' +
-          '<div class="pname">' + esc(ph.name || pd.defaultName) + '</div>' +
-          '<div class="pdate">' + esc((ph.startDate || '').slice(5)) + ' ~ ' + esc((ph.endDate || '').slice(5)) + '</div>' +
-          '<div class="pstatus ' + esc(statusText) + '">' + esc(statusText) + '</div>' +
-        '</div>';
-    }
-    timelineHTML += '</div>';
-
-    // Phase data sections
-    var phasesHTML = '';
-    for (var pi2 = 0; pi2 < PHASE_DEFS.length; pi2++) {
-      var pd2 = PHASE_DEFS[pi2];
-      var ph2 = (p.phases || [])[pi2] || { rows: [], name: pd2.defaultName, status: STATUS_OPTIONS[0], analysis: '', analysisColor: pd2.textColor, analysisBold: false };
-      var phClass2 = 'p' + pd2.id;
-      var rows2 = ph2.rows || [];
-      var rowsHTML2 = '';
-      for (var ri = 0; ri < rows2.length; ri++) {
-        var r = rows2[ri];
-        var peakClass = r.isPeak ? ' peak' : '';
-        rowsHTML2 += '<tr class="' + peakClass + '">' +
-          '<td class="dt"><input class="editable-cell" type="date" value="' + esc(r.date) + '" data-p="' + pi2 + '" data-r="' + ri + '" data-f="date"></td>' +
-          '<td class="num"><input class="editable-cell" value="' + esc(r.total) + '" data-p="' + pi2 + '" data-r="' + ri + '" data-f="total"></td>' +
-          '<td class="num"><input class="editable-cell" value="' + esc(r.live) + '" data-p="' + pi2 + '" data-r="' + ri + '" data-f="live"></td>' +
-          '<td class="num"><input class="editable-cell" value="' + esc(r.video) + '" data-p="' + pi2 + '" data-r="' + ri + '" data-f="video"></td>' +
-          '<td class="num"><input class="editable-cell" value="' + esc(r.mall) + '" data-p="' + pi2 + '" data-r="' + ri + '" data-f="mall"></td>' +
-          '<td class="num"><input class="editable-cell" value="' + esc(r.newVid) + '" data-p="' + pi2 + '" data-r="' + ri + '" data-f="newVid"></td>' +
-          '<td class="num"><input class="editable-cell" value="' + esc(r.recNew) + '" data-p="' + pi2 + '" data-r="' + ri + '" data-f="recNew"></td>' +
-          '<td class="num"><input class="editable-cell" value="' + esc(r.recOrd) + '" data-p="' + pi2 + '" data-r="' + ri + '" data-f="recOrd"></td>' +
-          '<td class="num"><input class="editable-cell" value="' + esc(r.aiNew) + '" data-p="' + pi2 + '" data-r="' + ri + '" data-f="aiNew"></td>' +
-          '<td class="num"><input class="editable-cell" value="' + esc(r.aiOrd) + '" data-p="' + pi2 + '" data-r="' + ri + '" data-f="aiOrd"></td>' +
-          '<td><input class="editable-cell" value="' + esc(r.phase) + '" data-p="' + pi2 + '" data-r="' + ri + '" data-f="phase"></td>' +
-        '</tr>';
-      }
-      phasesHTML +=
-        '<div class="phase-section ' + phClass2 + '" id="ps-' + pi2 + '">' +
-          '<div class="ps-header">' +
-            '<span class="ps-badge">' + pd.id + '</span>' +
-            '<span class="ps-title">' + esc(ph2.name || pd2.defaultName) + '</span>' +
-            '<div class="ps-controls">' +
-              '<label>开始</label><input type="date" value="' + esc(ph2.startDate || '') + '" data-pmeta="' + pi2 + '" data-meta="startDate">' +
-              '<label>结束</label><input type="date" value="' + esc(ph2.endDate || '') + '" data-pmeta="' + pi2 + '" data-meta="endDate">' +
-              '<label>名称</label><input type="text" value="' + esc(ph2.name || pd2.defaultName) + '" data-pmeta="' + pi2 + '" data-meta="name">' +
-              '<label>状态</label><select data-pmeta="' + pi2 + '" data-meta="status">' +
-                function() {
-                  var opts = '';
-                  for (var si = 0; si < STATUS_OPTIONS.length; si++) {
-                    var sel = ph2.status === STATUS_OPTIONS[si] ? ' selected' : '';
-                    opts += '<option value="' + esc(STATUS_OPTIONS[si]) + '"' + sel + '>' + esc(STATUS_OPTIONS[si]) + '</option>';
-                  }
-                  return opts;
-                }() +
-              '</select>' +
-            '</div>' +
-          '</div>' +
-          '<div class="table-wrap">' +
-            '<table class="data-table"><thead><tr>' +
-              '<th>日期</th><th>总销量</th><th>直播销量</th><th>短视频销量</th><th>商城销量</th>' +
-              '<th>新增视频</th><th>录屏新增</th><th>录屏出单</th><th>AI新增</th><th>AI出单</th><th>阶段</th>' +
-            '</tr></thead><tbody>' + rowsHTML2 + '</tbody></table>' +
-            '<button class="add-row-btn" data-padd="' + pi2 + '">+ 添加一行</button>' +
-          '</div>' +
-          '<div class="text-toolbar" style="margin-top:10px">' +
-            '<input type="color" value="' + esc(ph2.analysisColor || pd2.textColor) + '" data-pana="' + pi2 + '" data-ana="color" title="文字颜色">' +
-            '<button class="bold-btn' + (ph2.analysisBold ? ' active' : '') + '" data-pana="' + pi2 + '" data-ana="bold" title="加粗">B</button>' +
-          '</div>' +
-          '<textarea class="phase-analysis-ta" data-pana="' + pi2 + '" data-ana="text" placeholder="输入阶段分析...">' + esc(ph2.analysis || '') + '</textarea>' +
-        '</div>';
-    }
-
-    // Phase analysis cards
-    var anaHTML = '<div class="ana-grid">';
-    for (var ai = 0; ai < PHASE_DEFS.length; ai++) {
-      var pad = PHASE_DEFS[ai];
-      var aph = (p.phases || [])[ai] || {};
-      var ac = 'p' + pad.id;
-      anaHTML +=
-        '<div class="acard ' + ac + '">' +
-          '<div class="acard-header">' +
-            '<span class="atag">' + pad.id + '</span>' +
-            '<span class="aname">' + esc(aph.name || pad.defaultName) + '</span>' +
-          '</div>' +
-          '<div class="text-toolbar">' +
-            '<input type="color" value="' + esc(aph.analysisColor || pad.textColor) + '" data-cardana="' + ai + '" data-cardf="color">' +
-            '<button class="bold-btn' + (aph.analysisBold ? ' active' : '') + '" data-cardana="' + ai + '" data-cardf="bold" title="加粗">B</button>' +
-          '</div>' +
-          '<textarea data-cardana="' + ai + '" data-cardf="text" placeholder="输入分析内容...">' + esc(aph.analysis || '') + '</textarea>' +
-        '</div>';
-    }
-    anaHTML += '</div>';
-
-    // Suggestions
-    var sugHTML = '<div class="sug-list" id="sug-list">';
-    var sugs = p.suggestions || [];
-    for (var si = 0; si < sugs.length; si++) {
-      var sg = sugs[si];
-      sugHTML +=
-        '<div class="sug-item" data-sugidx="' + si + '">' +
-          '<span class="drag">☰</span>' +
-          '<textarea data-sugidx="' + si + '" data-sugf="text" placeholder="建议内容...">' + esc(sg.text || '') + '</textarea>' +
-          '<div class="sug-tools">' +
-            '<input type="color" value="' + esc(sg.color || '#333333') + '" data-sugidx="' + si + '" data-sugf="color">' +
-            '<button class="bold-btn' + (sg.bold ? ' active' : '') + '" data-sugidx="' + si + '" data-sugf="bold" title="加粗">B</button>' +
-            '<button class="del-sug" data-delsug="' + si + '" title="删除">×</button>' +
-          '</div>' +
-        '</div>';
-    }
-    sugHTML += '</div>';
-
-    // Dashboard
-    var dashHTML = '<div class="dash-grid" id="dash-grid">';
-    var dcards = p.dashboard || [{ label: '总销量', value: p.totalSales || '0', sub: '初始值' }];
-    for (var di = 0; di < dcards.length; di++) {
-      var dc = dcards[di];
-      dashHTML +=
-        '<div class="dash-card" data-dashidx="' + di + '">' +
-          (di > 0 ? '<span class="dc-del" data-deldash="' + di + '">×</span>' : '') +
-          '<div class="dc-label"><input value="' + esc(dc.label || '') + '" data-dashidx="' + di + '" data-dashf="label"></div>' +
-          '<div class="dc-val"><input value="' + esc(dc.value || '') + '" data-dashidx="' + di + '" data-dashf="value"></div>' +
-          '<div class="dc-sub"><input value="' + esc(dc.sub || '') + '" data-dashidx="' + di + '" data-dashf="sub"></div>' +
-        '</div>';
-    }
-    dashHTML += '</div>';
-
-    // Assemble
-    var html =
-      '<div class="toolbar">' +
-        '<button class="btn btn-primary btn-sm" id="btn-edit-product">编辑产品信息</button>' +
-        '<button class="btn btn-outline btn-sm" id="btn-refresh">刷新</button>' +
-      '</div>' +
-
-      '<div class="info-card">' +
-        '<div class="info-top">' +
-          '<span class="spu">' + esc(p.spu || '') + '</span>' +
-          '<span class="grade-badge">' + esc(p.grade || '') + '</span>' +
-          '<span class="info-name">' + esc(p.name || '') + '</span>' +
-        '</div>' +
-        '<div class="info-grid">' +
-          '<div class="info-field"><label>SPU</label><span>' + esc(p.spu || '-') + '</span></div>' +
-          '<div class="info-field"><label>PID</label><span>' + esc(p.pid || '-') + '</span></div>' +
-          '<div class="info-field"><label>上架日期</label><span>' + esc(p.launchDate || '-') + '</span></div>' +
-          '<div class="info-field"><label>首次寄样</label><span>' + esc(p.sampleDate || '-') + '</span></div>' +
-          '<div class="info-field"><label>等级</label><span>' + esc(p.grade || '-') + '</span></div>' +
-          '<div class="info-field"><label>总销量</label><span>' + esc(p.totalSales || '-') + '</span></div>' +
-          '<div class="info-field"><label>测试价</label><span>' + esc(p.price || '-') + '</span></div>' +
-        '</div>' +
-      '</div>' +
-
-      '<div class="sec-title">概览数据</div>' + overviewHTML +
-      '<div class="sec-title">阶段时间轴</div>' + timelineHTML +
-
-      '<div class="sec-title">各阶段数据明细</div>' + phasesHTML +
-      '<div class="sec-title">各阶段分析</div>' + anaHTML +
-
-      '<div class="sec-title">改进建议</div>' +
-      sugHTML +
-      '<button class="btn-add" id="btn-add-sug">+ 添加建议</button>' +
-
-      '<div class="sec-title">产品汇总看板</div>' +
-      dashHTML +
-      '<button class="btn-add" id="btn-add-dash">+ 添加看板</button>';
-
-    document.getElementById('main-area').innerHTML = html;
-
-    // Bind main-area delegated events
-    var mainEl = document.getElementById('main-area');
-    mainEl.removeEventListener('change', handleMainChange);
-    mainEl.removeEventListener('input', handleMainChange);
-    mainEl.removeEventListener('click', handleMainClick);
-    mainEl.addEventListener('change', handleMainChange);
-    mainEl.addEventListener('input', handleMainChange);
-    mainEl.addEventListener('click', handleMainClick);
-
-    // Toolbar
-    var btnEdit = document.getElementById('btn-edit-product');
-    if (btnEdit) btnEdit.addEventListener('click', function() { openEdit(id); });
-    var btnRef = document.getElementById('btn-refresh');
-    if (btnRef) btnRef.addEventListener('click', function() { renderProduct(id); });
-
-    // Add row buttons
-    for (var pb = 0; pb < 5; pb++) {
-      (function(pidx) {
-        var btnR = document.getElementById ? null : null;
-        var allBtns = document.querySelectorAll('[data-padd]');
-        for (var bi = 0; bi < allBtns.length; bi++) {
-          allBtns[bi].addEventListener('click', (function(pv) {
-            return function() {
-              if (!products[id].phases[pv].rows) products[id].phases[pv].rows = [];
-              products[id].phases[pv].rows.push({ date:'',total:'',live:'',video:'',mall:'',newVid:'',recNew:'',recOrd:'',aiNew:'',aiOrd:'',phase:'' });
-              saveData();
-              renderProduct(id);
-            };
-          })(pidx));
-        }
-      })(pb);
-    }
-
-    // Add sug
-    var btnSug = document.getElementById('btn-add-sug');
-    if (btnSug) btnSug.addEventListener('click', function() {
-      if (!products[id].suggestions) products[id].suggestions = [];
-      products[id].suggestions.push({ text: '', color: '#333333', bold: false });
-      saveData();
-      renderProduct(id);
-    });
-
-    // Add dash
-    var btnDash = document.getElementById('btn-add-dash');
-    if (btnDash) btnDash.addEventListener('click', function() {
-      if (!products[id].dashboard) products[id].dashboard = [];
-      products[id].dashboard.push({ label: '新指标', value: '0', sub: '' });
-      saveData();
-      renderProduct(id);
-    });
-  }
-
-  // ========== HANDLE MAIN CHANGE ==========
-  function handleMainChange(e) {
-    var el = e.target;
-    var id = activeId;
-    if (!id || !products[id]) return;
-
-    // Phase meta (date, name, status)
-    var pmeta = el.getAttribute('data-pmeta');
-    var meta = el.getAttribute('data-meta');
-    if (pmeta !== null && meta) {
-      var pi = parseInt(pmeta);
-      if (!products[id].phases[pi]) return;
-      if (meta === 'startDate' || meta === 'endDate' || meta === 'name' || meta === 'status') {
-        products[id].phases[pi][meta] = el.value;
-        debouncedSave();
-        // Update timeline if name or status changed
-        if (meta === 'name' || meta === 'status') {
-          updateTimelineCell(id, pi);
-        }
-        return;
-      }
-    }
-
-    // Phase data rows
-    var pIdx = el.getAttribute('data-p');
-    var rIdx = el.getAttribute('data-r');
-    var fld = el.getAttribute('data-f');
-    if (pIdx !== null && rIdx !== null && fld) {
-      var pi2 = parseInt(pIdx);
-      var ri = parseInt(rIdx);
-      if (!products[id].phases[pi2] || !products[id].phases[pi2].rows[ri]) return;
-      products[id].phases[pi2].rows[ri][fld] = el.value;
-      debouncedSave();
-      return;
-    }
-
-    // Phase analysis textarea
-    var pana = el.getAttribute('data-pana');
-    var panaf = el.getAttribute('data-ana');
-    if (pana !== null && panaf) {
-      var pi3 = parseInt(pana);
-      if (!products[id].phases[pi3]) return;
-      if (panaf === 'text') {
-        products[id].phases[pi3].analysis = el.value;
-        debouncedSave();
-      }
-      return;
-    }
-
-    // Phase analysis toolbar (color/bold)
-    var panaTool = el.getAttribute('data-pana');
-    var panaToolF = el.getAttribute('data-ana');
-    if (panaTool !== null && panaToolF) {
-      var pi4 = parseInt(panaTool);
-      if (!products[id].phases[pi4]) return;
-      if (panaToolF === 'color') {
-        products[id].phases[pi4].analysisColor = el.value;
-        debouncedSave();
-        // Also update the textarea style
-        var ta = document.querySelector('[data-pana="' + pi4 + '"][data-ana="text"]');
-        if (ta) ta.style.color = el.value;
-      }
-      return;
-    }
-
-    // Card analysis
-    var cardana = el.getAttribute('data-cardana');
-    var cardf = el.getAttribute('data-cardf');
-    if (cardana !== null && cardf) {
-      var cai = parseInt(cardana);
-      if (!products[id].phases[cai]) return;
-      if (cardf === 'text') {
-        products[id].phases[cai].analysis = el.value;
-        debouncedSave();
-      } else if (cardf === 'color') {
-        products[id].phases[cai].analysisColor = el.value;
-        debouncedSave();
-      }
-      return;
-    }
-
-    // Suggestions
-    var sugIdx = el.getAttribute('data-sugidx');
-    var sugF = el.getAttribute('data-sugf');
-    if (sugIdx !== null && sugF) {
-      var si2 = parseInt(sugIdx);
-      if (!products[id].suggestions || !products[id].suggestions[si2]) return;
-      if (sugF === 'text') {
-        products[id].suggestions[si2].text = el.value;
-        debouncedSave();
-      } else if (sugF === 'color') {
-        products[id].suggestions[si2].color = el.value;
-        debouncedSave();
-      }
-      return;
-    }
-
-    // Dashboard
-    var dashIdx = el.getAttribute('data-dashidx');
-    var dashF = el.getAttribute('data-dashf');
-    if (dashIdx !== null && dashF) {
-      var di2 = parseInt(dashIdx);
-      if (!products[id].dashboard || !products[id].dashboard[di2]) return;
-      products[id].dashboard[di2][dashF] = el.value;
-      debouncedSave();
-      return;
-    }
-  }
-
-  // ========== HANDLE MAIN CLICK ==========
-  function handleMainClick(e) {
-    var el = e.target;
-    var id = activeId;
-    if (!id || !products[id]) return;
-
-    // Phase analysis bold toggle
-    var panaB = el.getAttribute('data-ana');
-    if (el.classList && el.classList.contains('bold-btn') && el.getAttribute('data-pana') !== null) {
-      var piBold = parseInt(el.getAttribute('data-pana'));
-      if (products[id].phases[piBold]) {
-        products[id].phases[piBold].analysisBold = !products[id].phases[piBold].analysisBold;
-        saveData();
-        el.classList.toggle('active', products[id].phases[piBold].analysisBold);
-      }
-      return;
-    }
-
-    // Card analysis bold toggle
-    if (el.classList && el.classList.contains('bold-btn') && el.getAttribute('data-cardana') !== null) {
-      var ciBold = parseInt(el.getAttribute('data-cardana'));
-      if (products[id].phases[ciBold]) {
-        products[id].phases[ciBold].analysisBold = !products[id].phases[ciBold].analysisBold;
-        saveData();
-        el.classList.toggle('active', products[id].phases[ciBold].analysisBold);
-      }
-      return;
-    }
-
-    // Suggestion bold toggle
-    if (el.classList && el.classList.contains('bold-btn') && el.getAttribute('data-sugidx') !== null) {
-      var siBold = parseInt(el.getAttribute('data-sugidx'));
-      if (products[id].suggestions && products[id].suggestions[siBold]) {
-        products[id].suggestions[siBold].bold = !products[id].suggestions[siBold].bold;
-        saveData();
-        el.classList.toggle('active', products[id].suggestions[siBold].bold);
-      }
-      return;
-    }
-
-    // Delete suggestion
-    var delSug = el.getAttribute('data-delsug');
-    if (delSug !== null) {
-      var delSi = parseInt(delSug);
-      if (products[id].suggestions) {
-        products[id].suggestions.splice(delSi, 1);
-        saveData();
-        renderProduct(id);
-      }
-      return;
-    }
-
-    // Delete dashboard card
-    var delDash = el.getAttribute('data-deldash');
-    if (delDash !== null) {
-      var delDi = parseInt(delDash);
-      if (products[id].dashboard && products[id].dashboard[delDi]) {
-        products[id].dashboard.splice(delDi, 1);
-        saveData();
-        renderProduct(id);
-      }
-      return;
-    }
-  }
-
-  // ========== UPDATE TIMELINE CELL ==========
-  function updateTimelineCell(id, pi) {
-    var p = products[id];
-    if (!p || !p.phases || !p.phases[pi]) return;
-    var ph = p.phases[pi];
-    var pd = PHASE_DEFS[pi];
-    var col = document.querySelector('.phase-timeline .phase-col.p' + pd.id);
-    if (!col) return;
-    var nameEl = col.querySelector('.pname');
-    var statusEl = col.querySelector('.pstatus');
-    if (nameEl) nameEl.textContent = ph.name || pd.defaultName;
-    if (statusEl) {
-      statusEl.textContent = ph.status || STATUS_OPTIONS[0];
-      statusEl.className = 'pstatus ' + (ph.status || STATUS_OPTIONS[0]);
-    }
-  }
-
-  // ========== MODAL ==========
-  function openAddProduct() {
-    editTargetId = null;
-    document.getElementById('modal-title').textContent = '添加新产品';
-    document.getElementById('m-spu').value = '';
-    document.getElementById('m-pid').value = '';
-    document.getElementById('m-name').value = '';
-    document.getElementById('m-date').value = '2025-11-17';
-    document.getElementById('m-sample').value = '';
-    document.getElementById('m-grade').value = '';
-    document.getElementById('m-total').value = '';
-    document.getElementById('m-price').value = '';
-    document.getElementById('modal-product').classList.remove('hidden');
-    document.getElementById('m-spu').focus();
-  }
-
-  function openEdit(id) {
-    editTargetId = id;
-    var p = products[id];
-    document.getElementById('modal-title').textContent = '编辑产品';
-    document.getElementById('m-spu').value = p.spu || '';
-    document.getElementById('m-pid').value = p.pid || '';
-    document.getElementById('m-name').value = p.name || '';
-    document.getElementById('m-date').value = p.launchDate || '';
-    document.getElementById('m-sample').value = p.sampleDate || '';
-    document.getElementById('m-grade').value = p.grade || '';
-    document.getElementById('m-total').value = p.totalSales || '';
-    document.getElementById('m-price').value = p.price || '';
-    document.getElementById('modal-product').classList.remove('hidden');
-  }
-
-  function closeModal() {
-    document.getElementById('modal-product').classList.add('hidden');
-  }
-
-  function doAddProduct() {
-    var spu = document.getElementById('m-spu').value.trim();
-    if (!spu) { alert('请输入SPU编号'); return; }
-    try {
-      if (editTargetId) {
-        var pp = products[editTargetId];
-        pp.spu = spu;
-        pp.pid = document.getElementById('m-pid').value.trim();
-        pp.name = document.getElementById('m-name').value.trim();
-        pp.launchDate = document.getElementById('m-date').value;
-        pp.sampleDate = document.getElementById('m-sample').value;
-        pp.grade = document.getElementById('m-grade').value.trim();
-        pp.totalSales = document.getElementById('m-total').value.trim();
-        pp.price = document.getElementById('m-price').value.trim();
-        saveData();
-        closeModal();
-        renderProductList();
-        renderProduct(editTargetId);
-        return;
-      }
-      var nid = 'prod_' + Date.now();
-      var defaultPhases = PHASE_DEFS.map(function(pd) {
-        return {
-          id: pd.id,
-          startDate: '',
-          endDate: '',
-          name: pd.defaultName,
-          status: STATUS_OPTIONS[0],
-          analysis: '',
-          analysisColor: pd.textColor,
-          analysisBold: false,
-          rows: []
-        };
-      });
-      products[nid] = {
-        spu: spu,
-        pid: document.getElementById('m-pid').value.trim(),
-        name: document.getElementById('m-name').value.trim(),
-        launchDate: document.getElementById('m-date').value,
-        sampleDate: document.getElementById('m-sample').value,
-        grade: document.getElementById('m-grade').value.trim(),
-        totalSales: document.getElementById('m-total').value.trim(),
-        price: document.getElementById('m-price').value.trim(),
-        phases: defaultPhases,
-        suggestions: [],
-        dashboard: [{ label: '总销量', value: '', sub: '初始值' }]
-      };
-      saveData();
-      closeModal();
-      activeId = nid;
-      renderProductList();
-      renderProduct(nid);
-    } catch(err) {
-      console.error('[doAddProduct error]', err);
-      alert('操作失败: ' + err.message);
-    }
-  }
-
-  // ========== BOOT ==========
-  init();
-
 })();
 </script>
 </body>
